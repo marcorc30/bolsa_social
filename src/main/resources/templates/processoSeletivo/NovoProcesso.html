@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Processo Seletivo</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/upload.min.css}">
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}"> -->
+</head>	
+
+<body>
+
+<section layout:fragment="conteudo">	
+
+	<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1 th:if="${processoSeletivo.novo}">Cadastrar Processo Seletivo</h1>
+	 				  <h1 th:unless="${processoSeletivo.novo}" th:text="|Edição do ${processoSeletivo.descricao}|" >Edição do Processo</h1>
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/processos}">
+								<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisar Processo Seletivo</span>
+							</a>
+						</div>
+					</div>
+				  </div> 
+				</div>
+		</div>
+	
+<div class="container-fluid">
+	
+		
+<div class="js-panel-series">	
+	<div class="panel panel-default" > 	
+		<div class="panel-heading">
+			<h4>Informe as datas para o processo seletivo: </h4>
+		</div>
+
+	<div class="panel-body">
+	<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>		
+
+		<form method="post" th:object="${processoSeletivo}" class="form-vertical  js-form-loading"
+				th:action="${processoSeletivo.novo} ? @{/processos/novo} : @{/processos/{id}(id=${processoSeletivo.id})}">
+			<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+											
+				<input type="hidden" th:field="*{id}" >	
+	
+					<table class="table table-striped table-borderless">
+					     <tr>
+					        <td><strong>1. Selecione o Estado</strong></td>
+								<td width="50%" >
+								<div class="form-group">
+									<select id="input-estado-unidade"   class="form-control" th:field="*{estado}" data:url="@{/unidades/uf}">
+										<option value="0">Estado</option> 
+										<option th:each = "uf : ${lista}" th:text="${uf}" th:value="${uf}">DF</option> 
+									</select>
+								</div>	 							
+							</td>	
+							<td>
+							</td>						        
+					     </tr>
+					  
+					     <tr>
+				        	<td><strong>2. Selecione a Unidade</strong></td>
+							<td>
+							<div class="form-group">
+								<select id="input-unidade" class="form-control" th:field="*{unidade}"  >
+									<option value="0">Unidade </option> 
+									<option th:each = "unidade : ${unidades}" th:text="${unidade.nome}" th:value="${unidade.id}"></option>
+								</select>
+							</div>	 							
+							</td>	
+							<td>
+							</td>						        
+					     </tr>
+					     <tr>
+					        <td><strong>3. Tipo de Processo</strong></td>
+								<td>
+									<div class="form-group">
+										<select class="form-control" th:field="*{tipoProcesso}" id="tipo-processo">
+											<option value="">Selecione...</option> 
+											<option th:each = "tipo : ${tiposProcesso}" th:text="${tipo.descricao}" th:value="${tipo.id}" >Renovação de Bolsa</option> 
+										</select>
+									</div>	 							
+							</td>	
+					     </tr>
+					     <tr>
+					        <td><strong>4. Tipo de Edital</strong></td>
+								<td>
+									<div class="form-group">
+										
+										<select class="form-control" th:field="*{tipoEdital}" id="tipo-edital" data:url="@{/processos/edital}">
+											<option value="">Selecione...</option> 
+											<option th:each = "tipo : ${tiposEdital}" th:text="${tipo.descricao}" th:value="${tipo.id}" >Renovação de Bolsa</option> 
+										</select>
+									</div>	 							
+							</td>	
+					     </tr>			 		     
+					     <tr>
+					    
+					        <td><strong>5. Ńúmero do Edital</strong></td>
+								<td>
+									<div class="form-group">
+										
+										<select class="form-control" th:field="*{numeroEditalPrincipal}" id="numero-edital">
+											<option value=""></option> 
+											<option th:each = "processo : ${processos}" th:text="|${processo.id} - ${processo.descricao}|" th:value="${processo.id}" >Renovação de Bolsa</option> 
+										</select>
+									</div>	 							
+							</td>	
+					     </tr>
+					     <tr>
+					     	<td><strong>6. Ano de Vigência</strong></td>
+							<td>
+							   <input class="form-control js-ano js-ano-sair" placeholder="Ano de vigência no formato AAAA" th:field="*{ano}" id="ano-vigencia"/>
+							</td>						        
+					     
+					     </tr>					     
+					     
+						<tr>
+						
+					        <td><strong>7. Nome do Processo Seletivo</strong></td>
+								<td>
+									<input type="text" class="form-control" th:field="*{descricao}" id="nome-processo" readonly="readonly"/>
+								</td>	
+					        
+							<td>
+							</td>						        
+					     </tr>						     
+					</table>											
+					
+					<table class="table table-striped table-borderless">     
+					     <tr>
+					        <td><strong>8. Data para Divulgação do Edital da Bolsa</strong></td>
+								<td>
+						      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="dataReserva" class="form-control js-date" th:field="*{divulgacaoEdital}" autocomplete="off" placeholder="Data">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>   
+							</td>	
+							<td>
+							</td>						        
+					     </tr>
+					     <tr>
+					        <td><strong>9. Preenchimento do cadastro do candidato e upload dos documentos</strong></td>
+								<td>
+							   <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="preenchimentoCadastroInicio" class="form-control js-date" th:field="*{preenchimentoCadastroInicio}" autocomplete="off" placeholder="Data Início">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>	 							
+							</td>	
+							<td>
+						      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="preenchimentoCadastroFim" class="form-control js-date" th:field="*{preenchimentoCadastroFim}" autocomplete="off" placeholder="Data Fim">
+							      <div class="input-group-addon"> 
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>   								
+							</td>		
+					     </tr>
+					     <tr>
+					        <td><strong>10. Análise do perfil sócioeconômico, entrevistas e agenda para visita domiciliar, se necessário.</strong></td>
+								<td>
+						      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="analisePerfilInicio" class="form-control js-date" th:field="*{analisePerfilInicio}" autocomplete="off" placeholder="Data Início">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>   
+							</td>	
+							<td>
+							  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="analisePerfilFim" class="form-control js-date" th:field="*{analisePerfilFim}" autocomplete="off" placeholder="Data Fim">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>  								
+							</td>						        
+					     </tr>
+					     <tr>
+					        <td><strong>11. Validação Interna da Comissão de Bolsa Social</strong></td>
+								<td>
+						      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="validacaoComissaoInternaInicio" class="form-control js-date" th:field="*{validacaoComissaoInternaInicio}" autocomplete="off" placeholder="Data Início">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>   
+							</td>	
+							<td>
+								<div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="validacaoComissaoInternaFim" class="form-control js-date" th:field="*{validacaoComissaoInternaFim}" autocomplete="off" placeholder="Data Fim">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+								</div>		      								
+							</td>						        
+					     </tr>
+					     <tr>
+					        <td><strong>12. Resultado dos pré-selecionados à concessão de Bolsa Social</strong></td>
+								<td>
+							  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="resultadoInicio" class="form-control js-date" th:field="*{resultadoInicio}" autocomplete="off" placeholder="Data Início">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>	 							
+							</td>	
+							<td>
+							   <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="resultadoFim" class="form-control js-date" th:field="*{resultadoFim}" autocomplete="off" placeholder="Data Fim">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div>   								
+							</td>						        
+					     </tr>
+					     <tr>
+					        <td><strong>13. Efetivação da Bolsa Social por meio de assinatura do contrato e do termo aditivo</strong></td>
+								<td>
+							  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="efetivacaoConcessaoBolsaInicio" class="form-control js-date" th:field="*{efetivacaoConcessaoBolsaInicio}" autocomplete="off" placeholder="Data Início">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div> 	 							
+							</td>	 
+							<td>
+							  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+						              data-date-today-highlight="true" data-date-autoclose="true" >
+							      <input type="text" id="efetivacaoConcessaoBolsaFim" class="form-control js-date" th:field="*{efetivacaoConcessaoBolsaFim}" autocomplete="off" placeholder="Data Fim">
+							      <div class="input-group-addon">
+							         <span class="glyphicon glyphicon-th"></span>
+							      </div>
+							   </div> 								
+							</td>						        
+					     </tr>
+					  </table>   
+					  
+					  <div class="row">
+						  <div class="form-group col-sm-12">
+						  	<label class="control-label">Edital do Processo Seletivo</label>
+						    <input type="text" th:field="*{nomeArquivo}" class="form-control" readonly="readonly">
+						  	
+						  	<div>
+						  		<i class="glyphicon gkyphicon-cloud-upload"></i>
+						  		<a> <input id="upload-select" type="file" accept=".pdf"/></a>
+						  	</div> 
+						  </div>
+					  </div>
+					  
+					  
+					  <div class="row">
+						  <div class="form-group col-sm-12">
+						  	<label class="control-label">Assistente Social</label>
+						  	<select class="form-control" th:field="*{funcionario}">
+						  		<option value="">Selecione...</option>
+						  		<option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}">
+						  	</select>
+						  </div>
+					  </div>
+					  
+					  
+					  <div class="form-group">
+							<button class="btn  btn-primary" type="submit">Salvar</button>
+	 				   </div>	
+		</form>
+		
+</div>	
+</div>
+</div>
+</div>
+	
+	
+	</section>
+
+
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/pesquisa-unidadeAndUf.js}"></script>
+	<script th:src="@{/javascripts/cria-nome-processo-seletivo.js}"></script>
+	<script th:src="@{/javascripts/seleciona-edital.js}"></script>	
+	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/upload.min.js}"></script>
+	
+	
+	<script>
+		$(function(){
+			var settings = {
+					type: "json",
+					filelimit: "1",
+					allow: '*.(pdf)',
+					action: '/plbolsa/arquivo',
+					complete: function(resposta){
+						$('input[name=nomeArquivo]').val(resposta.nome)
+					}  
+					
+			};
+			
+			UIkit.uploadSelect($('#upload-select'), settings);
+		})
+	
+	</script>
+</th:block>	
+	
+</body>
+</html>	
+
+
+

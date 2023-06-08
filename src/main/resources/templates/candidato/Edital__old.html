@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+<title>Cadastro Inicial</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+    	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">
+</head>
+<body>
+
+<section layout:fragment="conteudo">
+
+<!-- <div th:replace="timeline/timeline :: timeline"></div>	 -->
+
+
+<div class="page-header">
+	<div class="container-fluid">
+	  <div class="row">
+	    <div class="col-sm-10">
+<!-- 	    	<h1>Edital de Concessão de Bolsa Social</h1>
+ --> 		</div>  
+	  </div>
+	</div>
+</div>
+
+
+<div class="container-fluid">
+
+	
+	<form method="post" th:object="${dadosIniciaisSolicitante}">
+		<div id="modal-edital" class="modal fade" role="dialog">
+		      <div class="modal-dialog modal-lg">
+					
+					
+		        	<!-- Conteúdo do modal-->
+			        <div class="modal-content">
+			
+			         	 <!-- Cabeçalho do modal -->
+				          <div class="modal-header">
+				            <h4 class="modal-title"><strong>Leia o Edital de Concessão de Bolsa abaixo e concorde com os termos para prosseguir com a inscrição.</strong></h4>
+				          </div>
+				
+				          <!-- Corpo do modal -->
+				          <div class="modal-body">
+				         	 <embed th:src="@{/edital/{nomeArquivo}(nomeArquivo = ${processoSeletivo.nomeArquivo})}" type="application/pdf" width="100%" height="100%" />
+				          </div>
+				          
+				          <!-- Rodapé do modal-->
+				          <div class="modal-footer">
+					        <a th:href="@{/solicitante/dadosIniciais}" class="btn btn-danger" role="button">Discordo</a> 
+					        <a th:href="@{/candidatos/novo}" class="btn btn-primary" role="button">Concordo</a> 
+				            <!-- <button type="submit" class="btn btn-primary">Concordo</button> -->
+				          </div>
+			
+			        </div>
+		      </div>
+	    </div>
+    </form>
+</div>
+
+
+</section>
+
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  
+  <script>
+	$('.js-status').bootstrapSwitch();  
+	
+	$(window).load(function() {
+	    $('#modal-edital').modal('show');
+	});
+	
+  </script>
+</th:block>
+	
+
+
+</body>
+</html>

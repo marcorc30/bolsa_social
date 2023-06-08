@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+  <head>
+
+     	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/vendors.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/algaworks.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/application.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/main.css}"/>
+	
+    <title>Modal em Bootstrap | HomeHost</title>
+  </head>
+  <body>
+  
+ <div class="page-header">
+		<div class="container-fluid">
+			<h1>Edital de Abertura do Processo de Concessão de Bolsa Social</h1>
+		</div>
+</div>
+			 
+  <div th:replace="solicitante/fragments/BarraNavegacao :: navbar"></div>
+ <!--  <br><br><br><br> -->
+    <!-- Botão que irá abrir o modal -->
+    <button type="button" class="btn btn-success btn-lg mt-2 ml-2 " data-toggle="modal" data-target="#meuModal">Abrir Edital</button>
+
+    <!-- Modal -->
+    <div id="meuModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-xl">
+
+        <!-- Conteúdo do modal-->
+        <div class="modal-content">
+
+          <!-- Cabeçalho do modal -->
+          <div class="modal-header">
+            <h4 class="modal-title"><strong>EDITAL Nº 118/2021 RENOVAÇÃO DE BOLSA ASSISTENCIAL DA EDUCAÇÃO BÁSICA PARA O SEMESTRE LETIVO DE 2023/1</strong></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Corpo do modal -->
+          <div class="modal-body">
+
+Em conformidade com a Lei 12.101/2009, regulamentadas pelo
+Decreto nº 8.242/2014 e pela Portaria Normativa 15 - MEC.
+Devido à pandemia (COVID-19) e às recomendações dos órgãos de saúde, o processo será
+realizado dentro das orientações de saúde do município.
+A Sociedade Porvir Científico, para o cumprimento dos seus objetivos filantrópicos estatutários, por meio
+de sua mantida Universidade La Salle, inscrita no CNPJ 92.741.990.0040-43, renovará bolsas assistenciais
+(parciais de 50% ou integrais) a alunos matriculados no semestre letivo de 2022/1, aplicáveis sobre o valor
+da semestralidade escolar.
+O número de bolsas assistenciais é limitado e regido por Legislação Federal específica que regulamenta a
+prestação de serviços das instituições detentoras de Certificado de Entidade Beneficente de Assistência
+Social (CEBAS).
+As bolsas assistenciais são destinadas EXCLUSIVAMENTE a alunos que foram beneficiados com bolsa
+assistencial no segundo semestre de 2021, que estejam devidamente matriculados no semestre vigente e
+que se encontram em situação de vulnerabilidade social e que comprovem sua situação através de análise
+do perfil socioeconômico.
+II - DO PRAZO DE VIGÊNCIA DA BOLSA ASSISTENCIAL
+A concessão de bolsa assistencial visa a proporcionar acesso e atendimento ao educando da Educação
+Superior, em modalidade presencial e EAD, e abrangerá o semestre letivo de 2022/1, sendo destinadas
+somente para o período regular (curricular).
+III - DO PROCESSO DE MANUTENÇÃO
+a) O aluno deverá acessar o link: https://www.unilasalle.edu.br/canoas/mais/bolsa-social-2022 para
+impressão dos instrumentais (ficha socioeconômica e outros) e a relação de documentação exigida, no
+período de 13 a 29/10/2021.
+b) O aluno deverá enviar para o email do setor de Bolsas e Financiamentos
+bolsasocial2021@unilasalle.edu.br , a ficha socioeconômica devidamente preenchida e assinada e demais
+documentos comprobatórios, conforme ANEXO 03 deste Edital, no período de 13 a 29/10/2021 para análise
+do perfil socioeconômico. Não serão aceitas fichas, declarações ou documentos fora do período divulgado.
+Documentação faltante poderá ser solicitada a qualquer tempo para continuidade do processo de análise.
+c) O número de bolsas assistenciais é destinado EXCLUSIVAMENTE a alunos que foram beneficiados
+com bolsa assistencial no semestre letivo de 2021/1 e que comprovem sua situação mediante análise do
+perfil socioeconômico.
+d) O resultado da análise da renovação da bolsa assistencial deverá ser obtido pelo aluno no período entre
+03 e 05/11/2021, por email bolsasocial2021@unilasalle.edu.br e através do site da Instituição
+Em conformidade com a Lei 12.101/2009, regulamentadas pelo
+Decreto nº 8.242/2014 e pela Portaria Normativa 15 - MEC.
+Devido à pandemia (COVID-19) e às recomendações dos órgãos de saúde, o processo será
+realizado dentro das orientações de saúde do município.
+A Sociedade Porvir Científico, para o cumprimento dos seus objetivos filantrópicos estatutários, por meio
+de sua mantida Universidade La Salle, inscrita no CNPJ 92.741.990.0040-43, renovará bolsas assistenciais
+(parciais de 50% ou integrais) a alunos matriculados no semestre letivo de 2022/1, aplicáveis sobre o valor
+da semestralidade escolar.
+O número de bolsas assistenciais é limitado e regido por Legislação Federal específica que regulamenta a
+prestação de serviços das instituições detentoras de Certificado de Entidade Beneficente de Assistência
+Social (CEBAS).
+As bolsas assistenciais são destinadas EXCLUSIVAMENTE a alunos que foram beneficiados com bolsa
+assistencial no segundo semestre de 2021, que estejam devidamente matriculados no semestre vigente e
+que se encontram em situação de vulnerabilidade social e que comprovem sua situação através de análise
+do perfil socioeconômico.
+II - DO PRAZO DE VIGÊNCIA DA BOLSA ASSISTENCIAL
+A concessão de bolsa assistencial visa a proporcionar acesso e atendimento ao educando da Educação
+Superior, em modalidade presencial e EAD, e abrangerá o semestre letivo de 2022/1, sendo destinadas
+somente para o período regular (curricular).
+III - DO PROCESSO DE MANUTENÇÃO
+a) O aluno deverá acessar o link: https://www.unilasalle.edu.br/canoas/mais/bolsa-social-2022 para
+impressão dos instrumentais (ficha socioeconômica e outros) e a relação de documentação exigida, no
+período de 13 a 29/10/2021.
+b) O aluno deverá enviar para o email do setor de Bolsas e Financiamentos
+bolsasocial2021@unilasalle.edu.br , a ficha socioeconômica devidamente preenchida e assinada e demais
+documentos comprobatórios, conforme ANEXO 03 deste Edital, no período de 13 a 29/10/2021 para análise
+do perfil socioeconômico. Não serão aceitas fichas, declarações ou documentos fora do período divulgado.
+Documentação faltante poderá ser solicitada a qualquer tempo para continuidade do processo de análise.
+c) O número de bolsas assistenciais é destinado EXCLUSIVAMENTE a alunos que foram beneficiados
+com bolsa assistencial no semestre letivo de 2021/1 e que comprovem sua situação mediante análise do
+perfil socioeconômico.
+d) O resultado da análise da renovação da bolsa assistencial deverá ser obtido pelo aluno no período entre
+03 e 05/11/2021, por email bolsasocial2021@unilasalle.edu.br e através do site da Instituição
+II - DO PRAZO DE VIGÊNCIA DA BOLSA ASSISTENCIAL
+A concessão de bolsa assistencial visa a proporcionar acesso e atendimento ao educando da Educação
+Superior, em modalidade presencial e EAD, e abrangerá o semestre letivo de 2022/1, sendo destinadas
+somente para o período regular (curricular).
+III - DO PROCESSO DE MANUTENÇÃO
+a) O aluno deverá acessar o link: https://www.unilasalle.edu.br/canoas/mais/bolsa-social-2022 para
+impressão dos instrumentais (ficha socioeconômica e outros) e a relação de documentação exigida, no
+período de 13 a 29/10/2021.
+b) O aluno deverá enviar para o email do setor de Bolsas e Financiamentos
+bolsasocial2021@unilasalle.edu.br , a ficha socioeconômica devidamente preenchida e assinada e demais
+documentos comprobatórios, conforme ANEXO 03 deste Edital, no período de 13 a 29/10/2021 para análise
+do perfil socioeconômico. Não serão aceitas fichas, declarações ou documentos fora do período divulgado.
+Documentação faltante poderá ser solicitada a qualquer tempo para continuidade do processo de análise.
+c) O número de bolsas assistenciais é destinado EXCLUSIVAMENTE a alunos que foram beneficiados
+com bolsa assistencial no semestre letivo de 2021/1 e que comprovem sua situação mediante análise do
+perfil socioeconômico. 
+d) O resultado da análise da renovação da bolsa assistencial deverá ser obtido pelo aluno no período entre
+03 e 05/11/2021, por email bolsasocial2021@unilasalle.edu.br e através do site da Instituição.
+          </div>
+
+          <!-- Rodapé do modal-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Discordo</button>
+            <button type="button" class="btn btn-primary">Concordo</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div th:replace="layout/fragments/Footer :: footer"></div>
+	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
+	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.mask.min.js}"></script>	
+	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.pt-BR.min.js}"></script>	
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	  </body>
+</html>

@@ -1,0 +1,2 @@
+alter table solicitacao_composicao_familiar
+	add conferido bit

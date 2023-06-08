@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro dos Parentes do Candidato</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}"> -->
+</head>	
+
+<body>
+
+	<section layout:fragment="conteudo">	
+
+	<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Composição Familiar</h1>
+ 	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato}"></span></font></h5>
+	 				  
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">6ª Etapa</p>
+			                       <!--  <p class="h6 text-muted mb-0 mb-lg-0">Composição Familiar</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>
+			
+			<div class="container-fluid">
+
+				<form method="POST" th:object="${composicaoFamiliar}" th:action="@{/composicao-familiar/novo}" class="form-vertical  js-form-loading">
+			    	<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+			    	
+			    	<input type="hidden" th:field="*{id}">
+					<div class="row">
+<!-- 						<div class="col-sm-4" th:if="${composicaoFamiliar.novo}">
+							<div class=form-group>
+								<label class="control-label ">CPF</label>
+								<input id="input-cpf" class="form-control  js-input-cpf" th:field="*{cpf}">
+							</div>
+						</div> -->
+					   	<div class="col-sm-8">
+							<div class="form-group">
+								<label class="control-label" for="input-responsavel-nome">Nome:</label> 
+								<input
+									id="input-responsavel-nome"  class="form-control" th:field="*{nome}" />
+							</div>
+						</div>
+							
+					</div>	
+					<div class="row">
+						  <div class="col-sm-4" >
+				               <div class="form-group">
+					    	      <label class="control-label">Data de Nascimento:</label>	
+								  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+							              data-date-today-highlight="true" data-date-autoclose="true" data-date-orientation="bottom">
+								      <input type="text" id="data-nascimento" class="form-control js-date" autocomplete="off" placeholder="Data de Nascimento" th:field="*{dataNascimento}">
+								      <div class="input-group-addon">
+								         <span class="glyphicon glyphicon-th"></span>
+								      </div>
+								   </div>
+								</div>   
+						   </div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="input-estado-civil">Estado Civil:</label>
+								<select id="input-estado-civil" class="form-control" th:field="*{estadoCivil}">
+									<option value="">Selecione...</option>
+									<option th:each="estadoCivil : ${estadosCivis}" th:value="${estadoCivil.id}" th:text="${estadoCivil.nome}">Casado</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="input-grau-parentesco">Escolaridade:</label>
+								<select id="input-grau-parentesco" class="form-control" th:field="*{escolaridade}">
+									<option value="">Selecione...</option>
+									<option th:each="escolaridade : ${escolaridades}" th:value="${escolaridade.id}" th:text="${escolaridade.nome}">Ensino Fundamental</option>
+								</select>
+							</div>
+						</div>		
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="input-grau-parentesco">Grau de Parentesco:</label>
+								<select id="input-grau-parentesco" class="form-control" th:field="*{parentesco}">
+									<option value="">Selecione...</option>
+									<option th:each="parentesco : ${parentescos}" th:value="${parentesco.id}" th:text="${parentesco.nome}">Pai</option>
+								</select>
+							</div>
+						</div>		
+					   	<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="input-responsavel-nome">Ocupação:</label> 
+								<input
+									id="input-responsavel-nome" type="text" class="form-control" th:field="*{ocupacao}" />
+							</div>
+						</div>
+					   	<div class="col-sm-4"> 
+							<div class="form-group">
+								<label class="control-label js-decimal" for="input-responsavel-nome">Salário Bruto:</label><a href="#" data-toggle="modal" data-target="#modalInfo"><i class="glyphicon glyphicon-info-sign" id="info"></i></a>
+								<div class="input-group"> 
+									<div class="input-group-addon">R$</div>
+									<input id="input-responsavel-nome" type="text" class="form-control js-decimal" th:field="*{salario}" />
+								</div>
+							</div>
+						</div> 
+					</div>													
+				
+				<button th:if=${composicaoFamiliar.novo} class="btn  btn-success" type="submit">Adicionar</button>
+				<button th:unless=${composicaoFamiliar.novo} class="btn  btn-success" type="submit">Alterar</button>
+		<!-- 		<a href="@{/responsavel-financeiro/novo}" class="btn btn-primary">Avançar</a> -->
+				
+				
+				</form>
+				 
+				  
+	<table class="table table-hover table-consulta"> 
+       <thead> 
+		<tr th:if="${conferido}"> 
+		   <td colspan="6"><p class="alert alert-warning"><strong><i class="glyphicon glyphicon-warning-sign alerta-aviso"></i></strong>  Prezado(a) <span th:text="${#authentication.principal.usuario.nome}"></span>, 
+		    	os componentes familiares abaixo que estão com <strong>linha na cor vemelha, deverão ter seus dados confirmados antes de avançar de etapa</strong>. 
+		    	Favor clicar na opção <i class="glyphicon glyphicon-pencil"></i> na linha correspondente da tabela abaixo, verifique as informações e altere as que forem necessárias.
+		    	Ao término da confirmação dos dados de todos componentes em vermelho, o botão avançar será ativado para prosseguir a solicitação na próxima etapa.
+		    	Novos componentes deverão ser cadastrados normalmente nos campos acima.</p>
+	    	</td> 
+		</tr>			
+
+       	  <tr>
+       	    <th>Nome</th>
+       	    <th>Parentesco</th>
+       	    <th>Estado Civil</th>
+       	    <th>Idade</th>
+       	    <th align="right">Salário Bruto</th>
+
+       	  </tr> 	 
+       </thead>
+       
+       <tbody>
+          <tr th:each="composicao : ${composicoesFamiliares}" th:classappend = "${not composicao.conferido} ? 'danger' : 'success'">
+            <td th:text="${composicao.nome}">Joana Almeida</td>
+            <td th:text="${composicao.parentesco.nome}">Mãe</td>
+            <td th:text="${composicao.estadoCivil.nome}">Casada</td>
+            <td th:text="${composicao.idade}">20</td>
+            
+            <td align="right" th:text="|R$ ${composicao.salario}|">R$ 1500,00</td>
+			<td class="text-center">
+				<a th:href="@{/composicao-familiar/{id}(id=${composicao.id})}" class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn " title="Excluir" href="#"
+					data:url="@{/composicao-familiar/{id}(id=${composicao.id})}"
+					data:objeto="${composicao.nome}">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>	 
+			 </td>         
+          </tr>
+          <tr th:unless="${#lists.isEmpty(composicoesFamiliares)}">
+          	<td colspan="5" align="right">Total: <span th:text="|R$ ${{soma}}|" class="soma"></span>
+          	
+          </tr>
+          <tr th:unless="${#lists.isEmpty(composicoesFamiliares)}">
+          	<td colspan="5" align="right">Per Capta: <span th:text="|R$ ${{media}}|" class="soma"></span>
+          </tr>
+          <tr th:if="${#lists.isEmpty(composicoesFamiliares)}">
+          	 <td colspan="5"><font color="red">Nenhum componente familiar cadastrado</font></td>
+          </tr> 
+       </tbody>
+     </table>		 		  
+		<div> 
+			<a  
+			   th:unless="${conferido}"  
+						th:href="@{/responsavel-financeiro/novo}" 
+						
+						class="btn btn-primary" role="button">Avançar</a> 
+		</div>		
+	</div>	 
+
+
+	<div class="modal fade info-renda" id="modalInfo" tabindex="-1" role="dialog"  th:fragment="modal">
+	 				<div class="modal-dialog  modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Aviso Importante</h4>
+					</div>
+					
+					<div class="modal-body">
+						<font color="red">Atenção: O salário bruto é o valor do seu contracheque/holerite. NÃO deve somar recebimentos
+					com Benefícios ou outras rendas. Nas próximas etapas será possível informar.</font>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+</section>
+
+
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/buscar-responsavel.js}"></script>
+</th:block>
+		
+		
+		
+				
+		
+		
+</body>
+</html>
+			
+			

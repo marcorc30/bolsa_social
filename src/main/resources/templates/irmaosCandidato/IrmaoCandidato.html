@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro dos Irmãos do Candidato</title> 
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">		
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}"> -->
+</head>	
+
+<body>
+
+	<section layout:fragment="conteudo">	
+
+	<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Irmãos do Candidato</h1>
+ 	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato}"></span></font></h5>
+<!-- 	 				  <h5><font color="blue">Processo Seletivo: <span th:text="|${processoSeletivo.id} - ${processoSeletivo.descricao}|"></span></font></h5>
+	 				  <h5><font color="blue">Unidade: <span th:text="|${unidade.id} - ${unidade.nome}|"></span></font></h5>
+	 				  <h5><font color="blue">Curso/Série: <span th:text="|${detalhesProcesso.serie.nivel.descricao} - ${detalhesProcesso.serie.descricao}|"></span></font></h5>
+ --> 	 				   
+	 				  <!-- <h5><font color="blue">Candidato: <span th:text="|${processoSeletivo.id} - ${processoSeletivo.descricao}|"></span></font></h5> -->
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">4ª Etapa</p>
+			                        <!-- <p class="h6 text-muted mb-0 mb-lg-0">Cadastro de Irmãos do Candidato</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>				  
+				  </div> 
+				</div>
+			</div>
+			
+			<div class="container-fluid">
+
+				<form method="POST"  th:object="${irmaoCandidato}" class="form-vertical  js-form-loading" th:action="@{/irmaos/novo}">
+				<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+	
+ 						<input type="hidden" th:field="*{id}">
+ 
+ 						<div class=row>
+							<div class="col-sm-6" >
+								<div class="form-group">
+									<label class="control-label">Nome do Irmão:</label>
+									<input id="nome" name="nome" class="form-control" th:field="*{nome}" />
+								</div>
+							</div>
+							<div class="col-sm-3" >
+								<div class="form-group">
+									<label class="control-label">Mora com o candidato?:</label>
+									<select id="opcao_mora_candidato" class="form-control" th:field="*{moraComCandidato}">
+										<option value="">Selecione...</option>
+										<option value="1">Sim</option>
+										<option value="0">Não</option>
+									</select>
+								</div>
+							</div>
+							
+   						    <div class="form-group col-sm-3">
+							   	  <button th:if="${irmaoCandidato.novo}" class="btn btn-success botao" type="submit">Adicionar</button>	
+							   	  <button th:unless="${irmaoCandidato.novo}" class="btn btn-success botao" type="submit">Alterar</button>	
+			   				</div>
+
+						</div>
+				</form>
+
+	<table class="table table-hover table-consulta">
+       <thead>
+       	  <tr>
+       	    <th>Id</th>
+       	    <th>Nome Irmão</th>
+       	    <th>Mora com candidato?</th>
+       	    
+       	  </tr> 	
+       </thead>
+       
+       <tbody>
+          <tr th:each="irmao : ${irmaos}">
+            <td th:text="${irmao.id}"></td>
+            <td th:text="${irmao.nome}">Maria Clara Guedes</td>
+           	<th:block>
+           		<td th:if="${irmao.moraComCandidato}"><span class="label label-success">Sim</span></td>
+           		<td th:unless="${irmao.moraComCandidato}"><span class="label label-danger">Não</span></td>
+           	</th:block>
+			<td class="text-center">                                                
+				<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/irmaos/{id}(id=${irmao.id})}">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn " title="Excluir" href="#"
+						data:url="@{/irmaos/{id}(id=${irmao.id})}"
+						data:objeto="${irmao.nome}" >
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			 </td>        
+          </tr>  
+          <tr th:if=${#lists.isEmpty(irmaos)}>
+          	<td colspan=2><font color="red">Nenhum Irmão Cadastrado</font></td>
+          </tr>
+       </tbody> 
+     </table>
+
+	<div class="form-group">
+<!-- 			<button class="btn  btn-primary" type="submit">Avançar</button>
+ -->			<!-- <a href="pesquisa-responsaveis.html" class="btn  btn-default">Cancelar</a> -->
+ 
+ 			 <a th:href="@{/irmaos/direcionar}" class="btn btn-primary" role="button">Avançar</a> 
+ 
+ 	</div>
+
+				
+</div>	
+			
+			
+</section>			
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+</th:block>	
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+<title>Cadastro Inicial</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">
+
+</head>
+<body>
+
+
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-12">
+	 				  <h1>Grupos de Etapas da Solicitação de Bolsa</h1>
+	 				  <p align="center" class="alert alert-warning">
+	 				   <strong>Cada etapa é um passo que você avança durante a sua solicitação de bolsa.
+	 				   Ela garante que os dados preenchidos não se percam, caso ocorra algum problema
+	 				   de conexão com sua internet. Por isso, fique atento ao preenchimento e seja bem-vindo(a).</strong>
+	 				  </p>
+					</div>  
+				  </div> 
+				</div>
+			</div>	
+			
+	<div class="container-fluid">		
+		<div class="row">
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Fazendo sua Escolha</h3>
+		        <ul style="list-style: none"> 
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Selecionando a Unidade de Ensino</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Aprovação do Edital</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Cadastrando/Atualizando os dados do Candidato</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success titulo-etapa">Vínculo com Candidato</h3>
+		        <ul style="list-style: none">
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Cadastro dos Irmãos</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Cadastro dos Responsáveis</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Composição Familiar</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Responsável Financeiro</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		 </div> 
+		 <div class="row"> 
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Situação da Composição Familiar</h3>
+		        <ul style="list-style: none">
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Situação Habitacional</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Bens Móveis</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Despesas</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Renda</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Benefícios</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Finalizando a Solicitação</h3>
+		        <ul style="list-style: none">
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Declaração Final</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Envio de Documentos</li>
+		        	<li><i class="glyphicon glyphicon-ok-sign"></i> Envio de Documentos Comuns a Familia</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  </div>
+		  <a th:href="@{/solicitacao/dadosIniciais}" class="btn btn-primary">Continuar</a>
+		</div> 
+		 
+	</section>
+
+</body>
+
+</html>

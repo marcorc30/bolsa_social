@@ -1,0 +1,2 @@
+alter table solicitacao_bolsa_irmao
+	add mora_com_candidato bit

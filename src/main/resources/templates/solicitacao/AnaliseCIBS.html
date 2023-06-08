@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Análise CIBS</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+ 
+<body>
+
+<section layout:fragment="conteudo">		
+
+		<div class="page-header">
+			<div class="container-fluid">  
+			  <div class="row"> 
+			    <div class="col-sm-10">
+ 				  <h1>Análise da Comissão Interna da Bolsa</h1> 
+ 				   	 <h5><font color="blue">Protocolo: <span th:text="${dadosIniciais.protocolo}"></span></font></h5>
+ 	 				 <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato.nome}"></span></font></h5>
+ 	 				 <h5><font color="blue">Processo Seletivo: <span th:text="|${dadosIniciais.processoSeletivo.id} - ${dadosIniciais.processoSeletivo.descricao}|"></span></font></h5>
+	 				 <h5><font color="blue">Unidade: <span th:text="|${dadosIniciais.unidade.id} - ${dadosIniciais.unidade.nome}|"></span></font></h5>
+	 				 <h5><font color="blue">Curso / Série / Turno: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.nivel.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span></font></h5>
+ 	 				 
+ 				  
+					</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/processos/avaliar/{id}(id=${dadosIniciais.processoSeletivo.id})}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Listar Inscrições</span>
+					</a>
+				</div> 
+			</div>
+			  </div> 
+			</div>
+		</div>
+
+
+		<div class="container-fluid">
+			<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>	
+			<form method="POST" th:action="@{/analise-cibs}" th:object="${analiseCIBS}">
+			<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+			<input type="hidden" th:value="${dadosIniciais.id}" th:field="*{id}">
+			
+			<div class="row">
+				<div class="col-sm-6">
+				<div class="panel-body">
+					<div class="row">
+					 	<div class="col-sm-12">
+					 		<font color="red"><strong>Informações Básicas</strong></font>
+					 	</div> 
+					</div> 
+					<div class="row">
+<!-- 					 	<div class="col-sm-12">
+					 		Série / Curso / Turma: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span>
+					 	</div> 
+ -->				</div>	
+					<div class="row"> 
+					 	<div class="col-sm-12">
+					 		Mora Perto da Escola? <span class="dados-solicitacao" th:text="${candidato.moraPertoEscola} ? 'Sim' : 'Não'"></span>
+					 	</div> 
+					</div>
+					<div class="row">
+					 	<div class="col-sm-12">
+					 		Possui Irmãos no Colégio? <span class="dados-solicitacao" th:text="${candidato.possuiIrmaosColegio} ? 'Sim' : 'Não'"></span>
+					 	</div> 
+					</div>
+					<div class="row">
+					 	<div class="col-sm-12">
+					 		Possui Deficiência? <span class="dados-solicitacao" th:text="${candidato.possuiDeficiencia} ? 'Sim' : 'Não'"></span>
+					 	</div> 
+					 	<div class="col-sm-6" th:if="${candidato.possuiDeficiencia} ">
+					 		Laudo: <a th:href="@{/arquivo/{nomeArquivo}(nomeArquivo = ${candidato.arquivoLaudo})}" target="_blank">download do arquivo PDF.</a>
+					 	</div> 
+				 	</div>
+		
+					<div class="row">
+					 	<div class="col-sm-12">
+					 		Beneficiário do Programa de Transferência de renda: <span class="dados-solicitacao" th:text="${#lists.isEmpty(beneficios)} ? 'Não' : 'Sim'"></span>
+					 	</div> 
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Benefício</th>
+									<th>Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="beneficio : ${beneficios}">
+									<td th:text="${beneficio.tipoPrograma.nome}"></td>
+									<td th:text="|R$ ${beneficio.valor}|"></td>
+								
+								</tr>
+							</tbody>
+						</table>		
+					</div>
+				</div>	
+		      </div>
+					  	
+					  <div class="col-sm-6 form-group" >
+					  	<div class="panel-body">
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		<font color="red"><strong>Parecer Técnico</strong></font>
+							 	</div> 
+							</div> 
+							<div class="row">	
+								<div class="col-sm-6" >
+									<div class="form-group">
+										<label class="control-label" for="input-renda-bruta">Renda Bruta Familiar<font color="red">*</font> </label> 
+										<input type="text" class="form-control"th:value="${{analiseTecnicaFinanceira.rendaBruta}}" readonly="readonly">
+									</div>
+								</div>
+								  
+								<div class="col-sm-6" >
+									<div class="form-group">
+										<label class="control-label" for="input-numero-familiares">Número de Familiares<font color="red">*</font></label> 
+				 						<input type="text" class="form-control"th:value="${analiseTecnicaFinanceira.numeroFamiliares}" readonly="readonly">
+									</div>
+								</div>
+							</div>
+							<div class="row">	
+								<div class="col-sm-6" >
+									<div class="form-group">
+										<label class="control-label" for="input-renda-per-capta">Renda Percapita<font color="red">*</font></label> 
+										<input type="text" class="form-control " th:value="${{analiseTecnicaFinanceira.rendaPercapita}}" readonly="readonly">
+									</div>
+								</div>
+								<div class="col-sm-6" >   
+									<div class="form-group">
+										<label class="control-label" for="input-faixa-beneficios">Faixa de Benefícios<font color="red">*</font></label> 
+										<input type="text" class="form-control" th:value="${analiseTecnicaFinanceira.percentual.percentual}" readonly="readonly">											
+									</div>
+								</div>					  
+					  </div>				
+					</div> 	
+				</div>
+				
+							
+			</div>
+			
+			
+			<div class="row">
+			 	<div class="col-sm-12">
+			 		<font color="red"><strong>Parecer da Comissão Interna de Bolsa de Estudos - CIBS</strong></font>
+			 	</div> 
+		    	<div class="col-sm-6 form-group">
+		    		<label class="control-label"><font color="blue"><strong>Concessão do benefício (conforme Lei Complementar 187/21)</strong></font></label>
+		    		<select class="form-control" th:field="*{concessao}">
+		    			<option value="">Selecione....</option>
+		    			<option value="Deferida">Deferida</option>
+		    			<option value="Indeferida">Indeferida</option>
+		    		</select>
+			    </div>
+				<div class="col-sm-6 form-group">
+		    		<label class="control-label"><font color="blue"><strong>Percentual de gratuidade concedido pela Comissão Interna de bolsa social - CIBS</strong></font></label>
+		    		<select class="form-control" th:field="*{percentual}" id="percentual-analise">
+		    			<option value="">Selecione....</option>
+		    			<option th:each=" percentual: ${percentuais}" th:value=${percentual.id} th:text="${percentual.percentual}"></option>
+		    		</select>
+			    </div>			    
+			 	
+			 	 
+			</div>
+			<div class="row">
+				<div class="col-sm-6 form-group">
+					<label class="control-label"><font color="blue"><strong>Parcela Inicial</strong></font></label>
+					<input type="text" class="form-control js-parcela" th:field="*{parcelaInicial}" id="parcela-inicial">
+				</div>
+				<div class="col-sm-6 form-group">
+					<label class="control-label"><font color="blue"><strong>Parcela Final</strong></font></label>
+					<input type="text" class="form-control js-parcela" th:field="*{parcelaFinal}" id="parcela-final">
+				</div>
+				
+			</div>
+			<div class="row">
+		    	<div class="col-sm-12 form-group">
+		    		<label class="control-label"><font color="blue"><strong>Observação da CIBS</strong></font></label>
+					<textarea rows=10 class="form-control" th:field="*{observacao}"></textarea>
+			    </div>
+			</div>
+			
+ 			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Gravar</button>
+				<span th:if="${analiseCIBS.novo}" ><a th:href="@{/relatorios/ficha-cibs/{id}(id=${dadosIniciais.id})}" target="_blank" class="btn btn-danger">Imprimir Parecer da CIBS</a></span>
+		 	</div>
+			
+			</form>
+
+		</div>	
+		
+</section>
+	
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/buscar-endereco.js}"></script>
+	<script th:src="@{/javascripts/cadastro_analise_cibs.js}"></script>
+	<script th:src="@{/javascripts/exibir-botao-upload.js}"></script>
+	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/upload.min.js}"></script>	
+</th:block>			
+</body>
+
+</html>

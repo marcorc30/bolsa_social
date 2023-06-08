@@ -1,0 +1,1 @@
+drop table series_habilitadas_processo

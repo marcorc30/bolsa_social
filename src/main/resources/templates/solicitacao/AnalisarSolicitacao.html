@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Análise de Solicitações</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+ 
+<body>
+
+<section layout:fragment="conteudo">		
+
+		<div class="page-header">
+			<div class="container-fluid">  
+			  <div class="row"> 
+			    <div class="col-sm-10">
+ 				  <h1>Análise da Solicitação</h1> 
+ 				   	 <h5><font color="blue">Protocolo: <span th:text="${dadosIniciais.protocolo}"></span></font></h5>
+ 	 				 <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato.nome}"></span></font></h5>
+ 	 				 <h5><font color="blue">Processo Seletivo: <span th:text="|${dadosIniciais.processoSeletivo.id} - ${dadosIniciais.processoSeletivo.descricao}|"></span></font></h5>
+	 				 <h5><font color="blue">Unidade: <span th:text="|${dadosIniciais.unidade.id} - ${dadosIniciais.unidade.nome}|"></span></font></h5>
+    				 <h5><font color="blue">Curso / Série / Turno: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.nivel.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span></font></h5>
+					</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/processos/avaliar/{id}(id=${dadosIniciais.processoSeletivo.id})}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Listar Inscrições</span>
+					</a>
+				</div> 
+			</div>
+			  </div> 
+			</div>
+		</div>
+
+
+		
+		<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>
+
+
+		<div class="container-fluid">
+
+			<!-- <form method="POST"  class="form-vertical  js-form-loading"> -->
+	
+		       <div id="faq" role="tablist" aria-multiselectable="true">
+
+					<!-- <div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa1">
+							<h5 class="panel-title">
+ 								<a data-toggle="collapse" data-parent="#faq" href="#etp1" aria-expanded="false" aria-controls="etp1">
+								Etapa 1 - Escolha do Processo Seletivo e Curso
+								</a>
+							</h5>
+						</div>
+					<div id="etp1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa1">
+						<div class="panel-body">
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Unidade: <span class="dados-solicitacao" th:text="${dadosIniciais.unidade.nome}"></span>
+							 	</div> 
+							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Processo Seletivo: <span class='dados-solicitacao' th:text="${dadosIniciais.processoSeletivo.descricao}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Série / Curso / Turma: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span>
+							 	</div> 
+							</div>
+						</div>
+					</div>
+					</div> -->
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa2">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp2" aria-expanded="false" aria-controls="etp2">
+								Etapa 2 - Cadastro do Candidato a bolsa
+								</a>
+							</h5>
+						</div>
+					<div id="etp2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa2">
+						<div class="panel-body">
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Nome: <span class="dados-solicitacao" th:text="${candidato.nome}"></span>
+							 	</div> 
+							</div> 
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Nacionalidade: <span class="dados-solicitacao" th:text="${candidato.nacionalidade.descricao}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Naturalidade: <span class="dados-solicitacao" th:text="${candidato.naturalidade}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Sexo: <span class="dados-solicitacao" th:text="${candidato.sexo}"> ></span>
+							 	</div> 
+							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Data de Nascimento: <span class="dados-solicitacao" th:text="${{candidato.dataNascimento}}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Email: <span class="dados-solicitacao" th:text="${candidato.email}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Telefone: <span class="dados-solicitacao" th:text="${candidato.telefone}"></span>
+							 	</div> 
+							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Celular: <span class="dados-solicitacao" th:text="${candidato.celular}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Cep: <span class="dados-solicitacao" th:text="${candidato.endereco.cep}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Endereço: <span class="dados-solicitacao" th:text="${candidato.endereco.endereco}"></span>
+							 	</div> 
+							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Cidade: <span class="dados-solicitacao" th:text="${candidato.endereco.cidade}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Bairro: <span class="dados-solicitacao" th:text="${candidato.endereco.bairro}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Estado: <span class="dados-solicitacao" th:text="${candidato.endereco.estado}"></span>
+							 	</div> 
+							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		CPF: <span class="dados-solicitacao" th:text="${candidato.cpf}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		RG: <span class="dados-solicitacao" th:text="${candidato.rg}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Órgão Emissor: <span class="dados-solicitacao" th:text="${candidato.rgOrgao}"></span>
+							 	</div> 
+							</div>
+							<div class="row">  	
+							 	<div class="col-sm-12">
+							 		Data de Emissão: <span class="dados-solicitacao" th:text="${{candidato.rgDataEmissao}}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Instituição de Origem: <span class="dados-solicitacao" th:text="${candidato.tipoInstituicao.descricao}"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Tipo de Transporte: <!-- <span class="dados-solicitacao" th:text="${candidato.tipoTransporte.tipoTransporte}"></span> -->
+							 	</div> 
+		 					</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+							 		Mora Perto da Escola? <span class="dados-solicitacao" th:text="${candidato.moraPertoEscola} ? 'Sim' : 'Não'"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-12">
+							 		Possui Irmãos no Colégio? <span class="dados-solicitacao" th:text="${candidato.possuiIrmaosColegio} ? 'Sim' : 'Não'"></span>
+							 	</div> 
+							</div>
+							<div class="row">
+							 	<div class="col-sm-3">
+							 		Possui Deficiência? <span class="dados-solicitacao" th:text="${candidato.possuiDeficiencia} ? 'Sim' : 'Não'"></span>
+							 	</div> 
+							 	<div class="col-sm-6" th:if="${candidato.possuiDeficiencia} ">
+							 		Laudo: <a th:href="@{/arquivo/{nomeArquivo}(nomeArquivo = ${candidato.arquivoLaudo})}" target="_blank">download do arquivo PDF.</a>
+							 	</div> 
+							 	
+ 							</div>
+							<div class="row"> 
+							 	<div class="col-sm-12">
+
+
+							 		Possui Desconto na Escola de Origem? <span class="dados-solicitacao" th:text="${candidato.possuiDescontoEscolaOrigem} ? 'Sim' : 'Não'"></span>
+							 	</div> 
+							</div>
+							
+						</div>
+					</div>
+					</div>
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa3">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp3" aria-expanded="false" aria-controls="etp3">
+								Etapa 3 - Cadastro dos Irmãos do Candidato
+								</a>
+							</h5>
+						</div>
+					<div id="etp3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa3">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+						       <thead>
+						       	  <tr>
+						       	    <th>Nome</th>
+						       	    <th>Mora com candidato</th>
+						       	  </tr> 	
+						       </thead>
+						       
+						       <tbody>
+						          <tr th:each="irmao : ${irmaos}">
+						            <td th:text="${irmao.nome}">José Roberto Pereira</td>
+						            <td class="dados-solicitacao" th:text="${irmao.moraComCandidato} ? 'Sim' : 'Não'"></td>
+						          </tr>
+						          <tr th:if=${#lists.isEmpty(irmaos)}>
+						          	<td colspan="8"><font color="red">R$ 0,00</font></td>
+						          </tr>                   
+						       </tbody>
+						     </table>
+						</div> 
+					</div>
+					</div>
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa4">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp4" aria-expanded="false" aria-controls="etp4">
+								Etapa 4 - Cadastro dos Responsáveis
+								</a>
+							</h5>
+						</div>
+					<div id="etp4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa4">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+						       <thead>
+						       	  <tr>
+						       	  	<th>CPF</th>
+						       	    <th>Nome</th>
+						       	    <th>Data de Nascimento</th>
+						       	    <th>Celular</th>
+						       	    <th>RG</th>
+						       	    <th>Parentesco</th>
+						       	    <th>Situação</th>
+						       	  </tr> 	
+						       </thead>
+						       
+						       <tbody>
+						          <tr th:each="responsavel : ${responsaveis}">
+						            <td th:text="${responsavel.cpf}">José Roberto Pereira</td>
+						            <td th:text="${responsavel.nome}">Identificação</td>
+						            <td th:text="${{responsavel.dataNascimento}}">habilitacao.pdf</td>
+						            <td th:text="${responsavel.celular}">habilitacao.pdf</td>
+						            <td th:text="${responsavel.rg}">habilitacao.pdf</td>
+						            <td th:text="${responsavel.parentesco.nome}">habilitacao.pdf</td>
+									<td th:text="${responsavel.situacaoResponsavel.nome}">habilitacao.pdf</td>						            									       
+						          </tr>
+						       </tbody>
+						     </table>						
+							
+						</div>
+					</div>
+					</div>					
+					
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa5">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp5" aria-expanded="false" aria-controls="etp5">
+								Etapa 5 - Composição Familiar
+								</a>
+							</h5>
+						</div>
+					<div id="etp5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa5">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+						       <thead>
+						       	  <tr>
+						       	    <th>Nome</th>
+						       	    <th>Parentesco</th>
+						       	    <th>Idade</th>
+						       	    <th>Estado Civil</th>
+						       	    <th>Escolaridade</th>
+						       	    <th>Ocupação</th>
+						       	    <td align="right">Salário</td>
+						       	  </tr> 	
+						       </thead>
+						       
+						       <tbody>
+						          <tr th:each="composicao : ${composicoes}">
+						            <td th:text="${composicao.nome}">José Roberto Pereira</td>
+						            <td th:text="${composicao.parentesco.nome}">Identificação</td>
+						            <td th:text="|${composicao.idade} anos|">habilitacao.pdf</td>
+						            <td th:text="${composicao.estadoCivil.nome}">habilitacao.pdf</td>
+						            <td th:text="${composicao.escolaridade.nome}">habilitacao.pdf</td>
+						            <td th:text="${composicao.ocupacao}">habilitacao.pdf</td>
+									<td align="right" th:text="|R$ ${{composicao.salario}}|">habilitacao.pdf</td>						            									       
+						          </tr>
+						          <tr align="right">
+						          	<td colspan="8" th:text="|Total Renda Familiar: R$ ${{renda}}|" class="soma">R$ 0,00</td>
+						          </tr>                   
+						       </tbody>
+						     </table>
+						</div>
+					</div>
+					</div>
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa6">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp6" aria-expanded="false" aria-controls="etp6">
+								Etapa 6 - Responsável Financeiro
+								</a>
+							</h5>
+						</div>
+					<div id="etp6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa6">
+						<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-12">
+										CPF: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.cpf}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Nome: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.nome}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Data de Nascimento: <span class="dados-solicitacao" th:text="${{responsavelFinanceiro.dataNascimento}}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Celular: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.celular}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Telefone: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.telefone}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Nacionalidade: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.nacionalidade.descricao}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Naturalidade: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.naturalidade}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Profissão: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.profissao}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Email: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.email}"></span>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+										RG: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.rg}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Órgão Emissor: <span class="dados-solicitacao" th:text="${responsavelFinanceiro.orgaoEmissor}"></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										Data Emissão: <span class="dados-solicitacao" th:text="${{responsavelFinanceiro.dataEmissao}}"></span>
+									</div>
+								</div>
+								
+						</div>
+					</div>
+					</div>
+					
+				
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa7">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp7" aria-expanded="false" aria-controls="etp7">
+								Etapa 7 - Situação Habitacional da Familia
+								</a>
+							</h5>
+						</div>
+					<div id="etp7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa7">
+						<div class="panel-body">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Área da Moradia</th>
+											<th>Imóvel da Moradia</th>
+											<th>Condição da Moradia</th>
+											<th>Tipo Moradia</th>
+											<th>Tem outros moradores?</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td th:text="${situacaoHabitacional.moradiaArea.area}"></td>
+											<td th:text="${situacaoHabitacional.moradiaImovel.imovel}"></td>
+											<td th:text="${situacaoHabitacional.moradiaCondicao.condicao}"></td>
+											<td th:text="${situacaoHabitacional.moradiaTipo.tipo}"></td>
+											<td th:text="${situacaoHabitacional.moradiaOutrosMoradores.resposta}"></td>
+										</tr>
+									</tbody>
+								</table>
+						
+						</div>
+					</div>
+					</div>					
+										
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa8">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp8" aria-expanded="false" aria-controls="etp8">
+								Etapa 8 - Bens Móveis
+								</a>
+							</h5>
+						</div>
+					<div id="etp8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa8">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+								<thead>
+									<tr>
+										<th>Modelo</th>
+										<th>Ano Fabricação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="bemMovel : ${bensMoveis}">
+										<td th:text="${bemMovel.modelo}">
+										<td th:text="${bemMovel.anoFabricacao}">
+									</tr>
+									<tr th:if="${#lists.isEmpty(bensMoveis)}">
+										<td colspan="2"><font color="red">Não existem bens móveis cadastrados</font></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					</div>					
+										
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa9">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp9" aria-expanded="false" aria-controls="etp9">
+								Etapa 9 - Informações Financeiras - Despesas do Último mês
+								</a>
+							</h5>
+						</div>
+					<div id="etp9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa9">
+						<div class="panel-body">
+						<table class="table table-hover table-consulta">
+								<thead>
+									<tr>
+										<th>Tipo da Despesa</th>
+										<th>Valor</th> 
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="despesa : ${despesas}">
+										<td th:text="${despesa.tipoDespesa.nome}">
+										<td th:text="|R$ ${{despesa.valor}}|">
+									</tr>
+									<tr th:if="${#lists.isEmpty(despesas)}">
+										<td colspan="2"><font color="red">Não existem despesas cadastradas</font></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					</div>					
+										
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa10">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp10" aria-expanded="false" aria-controls="etp10">
+								Etapa 10 - Informações Financeiras - Renda Agregada do Último mẽs
+								</a>
+							</h5>
+						</div>
+					<div id="etp10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa10">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+									<thead>
+										<tr>
+											<th>Renda</th> 
+											<th>Valor</th> 
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="renda : ${rendas}">
+											<td th:text="${renda.tipoRenda.nome}">
+											<td th:text="|R$ ${{renda.valor}}|">
+										</tr>
+										<tr th:if="${#lists.isEmpty(rendas)}">
+											<td colspan="2"><font color="red">Não existem rendas cadastradas</font></td>
+										</tr>
+									</tbody>
+								</table>
+						</div>
+					</div>
+					</div>		
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa11">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp11" aria-expanded="false" aria-controls="etp11">
+								Etapa 11 - Informações Financeiras - Benefícios por programa de transferência de renda
+								</a>
+							</h5>
+						</div>
+					<div id="etp11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa11">
+						<div class="panel-body">
+								<table class="table table-hover table-consulta">
+									<thead>
+										<tr>
+											<th>Benefício</th> 
+											<th>Valor</th> 
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="beneficio : ${beneficios}">
+											<td th:text="${beneficio.tipoPrograma.nome}">
+											<td th:text="|R$ ${{beneficio.valor}}|">
+										</tr>
+										<tr th:if="${#lists.isEmpty(beneficios)}">
+											<td colspan="2"><font color="red">Não existem benefícios cadastradas</font></td>
+										</tr>
+									</tbody>
+								</table>						
+						</div>
+					</div>
+					</div>					
+								
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa12">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp12" aria-expanded="false" aria-controls="etp12">
+								Etapa 12 - Declaração Final de Composição Familiar na Solicitação da bolsa
+								</a>
+							</h5> 
+						</div>
+					<div id="etp12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa12">
+						<div class="panel-body">
+									<div class="row"> 
+									 	<div class="col-sm-12">
+									 		Declara Imposto de Renda: <span class="dados-solicitacao" th:text="${declaracaoFinal.irResposta.irresposta}"></span>
+									 	</div> 
+									</div>								
+									<div class="row">
+										<div class="col-sm-12">
+											Inscrito no CadÚnico: <span class="dados-solicitacao" th:text="${declaracaoFinal.inscritoCadUnico} ? 'Sim' : 'Não'"></span>
+										</div>
+									</div>
+
+						</div>
+					</div>
+			 		</div>	
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa13">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp13" aria-expanded="false" aria-controls="etp13">
+								Etapa 13 - Upload de Documentos
+								</a>
+							</h5>
+						</div>
+					<div id="etp13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa13">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+						       <thead>
+						       	  <tr>
+						       	    <!-- <th>Nome</th> -->
+						       	    <th>Grupo do Documento</th>
+						       	    <!-- <th>Descrição</th> -->
+						       	    <th>Arquivo</th>
+						       	  </tr> 	
+						       </thead>
+						       
+						       <tbody>
+						          <tr th:each="documento : ${documentos}">
+						            <!-- <td th:text="${documento.componenteFamiliar.nome}">José Roberto Pereira</td> -->
+						            
+						            <td th:text="${documento.tipoDocumento.descricao}">Identificação</td>
+						           <!--  <td th:text="${documento.descricao}">habilitacao.pdf</td> -->
+						            <td>
+						            	<a th:href="@{/arquivo/{nomeArquivo}(nomeArquivo = ${documento.nomeArquivo})}" target="_blank">
+						           		 	<i class="glyphicon glyphicon-duplicate"></i>
+						            	</a>
+						            </td>
+									       
+						          </tr>                   
+						       </tbody>
+						     </table>				
+						
+						</div>
+					</div>
+					</div>	
+					
+					<!-- <div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa14">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp14" aria-expanded="false" aria-controls="etp14">
+								Guia - Cálculo dos ìndices
+								</a>
+							</h5>
+						</div>
+					<div id="etp14" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa14">
+						<div class="panel-body">
+							<div class="panel panel-default">
+								<div class="panel-heading"><h4>Cálculo de Índices<small><font color="red"></font></small></h4></div>
+								  <div class="panel-body">
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-bruta">Renda Bruta Familiar<font color="red">*</font> </label> 
+												<input type="text" class="form-control"th:value="${{renda}}">
+											</div>
+										</div>
+										
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-numero-familiares">Número de Familiares<font color="red">*</font></label> 
+						 						<input type="text" class="form-control"th:value="${total}">
+											</div>
+										</div>
+									</div>
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-per-capta">Renda Percapita<font color="red">*</font></label> 
+												<input type="text" class="form-control"th:value="${{rendaPerCapta}}">
+											</div>
+										</div>
+										<div class="col-sm-6" >   
+											<div class="form-group">
+												<label class="control-label" for="input-faixa-beneficios">Faixa de Benefícios<font color="red">*</font></label> 
+												<input type="text" class="form-control"th:value="100">											
+											</div>
+										</div>
+									</div>	
+							  </div>
+							</div> 
+						</div>
+					</div>
+					</div>	 -->									
+
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa15">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp15" aria-expanded="false" aria-controls="etp15">
+								Análise Técnica Social - Documental
+								</a>
+							</h5>
+						</div>
+					<div id="etp15" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa15">
+						<div class="panel-body">
+							<div class="panel panel-default">
+						 
+							<form method="POST" th:action="@{/analise-documental}" id="analise-documental">
+							    <div class="alert alert-danger hidden js-mensagem-erro" role="alert"></div>
+							    <div class="alert alert-success hidden js-mensagem-sucesso" role="success"></div>
+								<input type="hidden" th:value="${dadosIniciais.id}" id="dadosIniciais">
+								<!-- <div class="panel-heading"><h4>Análise Técnica Documental<small><font color="red"></font></small></h4></div> -->
+				  				
+								  <div class="panel-body">
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-bruta">Título<font color="red">*</font> </label> 
+												<input type="text" class="form-control" id="titulo" >
+											</div>
+										</div>
+									</div>
+									<div class="row">	
+										<div class="col-sm-12" >
+											<div class="form-group">
+												<label class="control-label" for="input-numero-familiares">Descrição<font color="red">*</font></label> 
+						 						<textarea rows=10 class="form-control" id="descricao" ></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-per-capta">Data Limite<font color="red">*</font></label> 
+												<input type="date" class="form-control" id="data-limite" >
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-per-capta">Nome do Solicitante para conferência<font color="red">*</font></label> 
+												<input type="text" class="form-control" id="nome" th:value="${dadosIniciais.usuario.nome}" readonly="readonly">											
+											</div>
+										</div>
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-per-capta">Email do Solicitante para conferência<font color="red">*</font></label> 
+												<input type="text" class="form-control" id="email" th:value="${dadosIniciais.usuario.email}" readonly="readonly">											
+											</div>
+										</div>
+
+									</div>									
+									<button type="submit" class="btn btn-primary js-salvar-enviar-email">Salvar e Enviar Email</button>
+									<!-- <a href="#" class="js-submit-btn js-salvar-enviar-email" data:acao="enviarEmail">Salvar e enviar por e-mail</a> -->									
+									
+									<!-- <div class="row" style="clear: both"> 
+										<div class="col-lg-12">
+											 <div class="btn-group">
+											  <button type="submit" class="btn  btn-primary  js-submit-btn" data:acao="salvar">Salvar</button>
+											  <button type="button" class="btn  btn-primary  dropdown-toggle" data-toggle="dropdown">
+											    <span class="caret"></span>
+											  </button>
+											  
+											  <ul class="dropdown-menu">
+											    <li><a href="#" class="js-submit-btn js-salvar-enviar-email" data:acao="enviarEmail">Salvar e enviar por e-mail</a></li>
+											  </ul>
+											</div>
+										
+											<button class="btn  btn-danger">Cancelar</button>
+										</div>
+									</div>	 -->								
+							  </div>
+							</form>
+							
+							
+							</div> 
+						</div>
+					</div>
+					</div>									
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa16">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp16" aria-expanded="false" aria-controls="etp16">
+								Análise Técnica Social - Financeira
+								</a>
+							</h5>
+						</div>
+					<div id="etp16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa16">
+						<div class="panel-body">
+						
+							<div class="panel panel-default"> 								   	
+							<form method="POST" th:action="@{/analise-tecnica-financeira}" id="analise-tecnica-financeira">
+							<div class="alert alert-danger hidden js-mensagem-erro" role="alert"></div>
+						    <div class="alert alert-success hidden js-mensagem-sucesso" role="success"></div>
+								<input type="hidden" th:value="${dadosIniciais.id}" id="dadosIniciais" >
+								<input type="hidden" th:value="${dadosIniciais.id}" id="id" >
+							
+								<!-- <div class="panel-heading"><h4>Análise Técnica Financeira<small><font color="red"></font></small></h4></div> -->
+								  <div class="panel-body">
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label " for="input-renda-bruta">Renda Bruta Familiar<font color="red">*</font> </label> 
+						 						<input type="text" class="form-control js-decimal" id="rendaBruta" th:value="${#numbers.formatDecimal(analiseTecnicaFinanceira.rendaBruta, 1, 2, 'COMMA')}" >
+											</div>
+									
+											
+										</div>
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label " for="input-renda-numeroFamiliares">Número de Familiares<font color="red">*</font> </label> 
+												<input type="text" class="form-control js-inteiro" id="numeroFamiliares"  th:value="${analiseTecnicaFinanceira.numeroFamiliares}">
+											</div>
+										</div>
+										
+									</div>
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label " for="input-renda-bruta">Renda Percapita<font color="red">*</font> </label> 
+												<input type="text" class="form-control js-decimal" id="rendaPercapita" th:value="${#numbers.formatDecimal(analiseTecnicaFinanceira.rendaPercapita, 1, 2, 'COMMA')}" disabled="disabled" >
+											</div>
+										</div>
+										<div class="col-sm-6" >
+										
+	 								    	<div class="form-group">
+									    		<label class="control-label">Faixa de Benefício</label>
+									    		<select class="form-control" name="percentual" id="percentual"  >
+									    			<option value="">Selecione....</option>
+									    			<th:block th:if="${percentualBolsa}">
+										    			<option th:each=" percentual: ${percentuais}" th:value=${percentual.id} th:text="${percentual.percentual}" th:selected="${analiseTecnicaFinanceira.percentual.id} ? (${percentual.id} == ${analiseTecnicaFinanceira.percentual.id}) : ''"></option>
+										    		</th:block>	
+										    		<th:block th:unless="${percentualBolsa}">
+														<option th:each=" percentual: ${percentuais}" th:value=${percentual.id} th:text="${percentual.percentual}" ></option>									    			
+										    		</th:block>
+									    		</select>
+									    	</div>
+										</div>
+										
+									</div>									
+									<div class="row">	
+										<div class="col-sm-12" >
+											<div class="form-group">
+												<label class="control-label" for="input-numero-familiares">Observação (Descrever se houve exclusão de algum valor considerando a Portaria 15/17 do MEC)
+												<font color="red">*</font></label> 
+						 						<textarea rows="20" class="form-control" id="observacao" th:text="${analiseTecnicaFinanceira.observacao}"></textarea>
+											</div>
+										</div>
+									</div>
+																									
+									<button class="btn  btn-primary" type="submit" id="js-botao-salvar-analise-tecnica-financeira">Gravar</button>
+								 	 
+							  </div>
+							  </form>
+							</div> 
+						</div>
+					</div>
+					</div>		
+					
+				  <div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa17">
+							<h5 class="panel-title">
+								
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp17" aria-expanded="false" aria-controls="etp17">
+								Análise Técnica Social - Parecer
+								</a>
+							</h5>
+						</div>
+					<div id="etp17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa17">
+						<div class="panel-body">
+							<div class="panel panel-default">
+								<!-- <div class="panel-heading"><h4>Análise Técnica Parecer<small><font color="red"></font></small></h4></div> -->
+								  <div class="panel-body">
+									  <form method="POST" th:action="@{/analise-tecnica-parecer}" id="analise-tecnica-parecer">
+										<div class="alert alert-danger hidden js-mensagem-erro-parecer" role="alert"></div>
+									    <div class="alert alert-success hidden js-mensagem-sucesso-parecer" role="success"></div>
+										  <input type="hidden" th:value="${dadosIniciais.id}" id="dadosIniciais">
+										  <input type="hidden" th:value="${dadosIniciais.id}" id="id">
+<!-- 										    <div class="row">
+		 								    	<div class="col-sm-10 form-group">
+										    		<label class="control-label">Beneficiário de bolsa assistencial na instituição em 2022 do <span th:text=${dadosIniciais.processoSeletivo.descricao}></span></label>
+										    		<select class="form-control" id="percentual">
+										    			<option value="">Selecione....</option>
+										    			<option th:each=" percentual: ${percentuais}" th:value=${percentual.id} th:text="${percentual.percentual}"></option>
+										    		</select>
+										    	</div>
+										    </div>
+ -->									 		
+											<div class="row">	
+												<div class="col-sm-12" >
+													<div class="form-group">
+														<label class="control-label" for="input-numero-familiares">Observação da Assistente Social<font color="red">*</font></label> 
+								 						
+								 						<textarea rows=10 class="form-control" id="observacao" th:text="${analiseTecnicaParecer.observacao}"></textarea>
+													</div>
+												</div>
+											</div>
+											<button class="btn  btn-primary" type="submit" id="js-botao-salvar-analise-tecnica-parecer">Gravar</button>
+										</form>
+							  </div>
+							</div> 
+						</div>
+					</div>
+					</div>			
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa18">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp18" aria-expanded="false" aria-controls="etp18">
+								Análise Técnica Social - Visita Domiciliar
+								</a>
+							</h5>
+						</div>
+					<div id="etp18" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Etapa18">
+						<div class="panel-body">
+							<div class="panel panel-default">
+								<!-- <div class="panel-heading"><h4>Análise Técnica Visita Domiciliar<small><font color="red"></font></small></h4></div> -->
+								  <div class="panel-body">
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-bruta">Motivo<font color="red">*</font> </label> 
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</div>
+									<div class="row">	
+										<div class="col-sm-12" >
+											<div class="form-group">
+												<label class="control-label" for="input-numero-familiares">Resumo<font color="red">*</font></label> 
+						 						<textarea rows=10 class="form-control"></textarea>
+											</div>
+										</div> 
+									</div> 
+									<div class="row">	
+										<div class="col-sm-6" >
+											<div class="form-group">
+												<label class="control-label" for="input-renda-per-capta">Upload do Relatório<font color="red">*</font></label> 
+												<input type="text" class="form-control" name="nomeArquivo">					
+											  	<div>
+											  		<i class="glyphicon gkyphicon-cloud-upload"></i>
+											  		<a> <input id="upload-select" type="file" accept=".pdf" /></a>
+											  		
+											  	</div> 
+																		
+											</div>
+										</div>
+									</div>
+									<button class="btn  btn-primary" type="submit">Enviar</button>
+							  </div>
+							</div> 
+						</div>
+					</div>
+					</div>							
+					
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="Etapa19">
+							<h5 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#etp19" aria-expanded="false" aria-controls="etp19">
+								Analise Técnica Social - Mensagens Enviadas ao Solicitante
+								</a>
+							</h5>
+						</div>
+					<div id="etp19" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Etapa19">
+						<div class="panel-body">
+							<table class="table table-hover table-consulta">
+									<thead>
+										<tr>
+											<th>Data e Hora do Envio</th> 
+											<th>Destinatário (email do solicitante)</th> 
+											<th>Titulo do Solicitante</th>
+											<th>Mensagem</th> 
+										</tr>
+									</thead>
+									<tbody>
+										<tr  th:each="analiseDocumental : ${analisesDocumentais}">
+											<td th:text="${{analiseDocumental.dataEnvio}}"></td>
+											
+											<td th:text="${dadosIniciais.usuario.email}"></td>
+											<td th:text="${analiseDocumental.titulo}"></td>
+
+											<td class="js-email" width="2" height="2"><a href="#"  class="titulo" data-toggle="modal" data-target="#modalInfo"><span th:text="${analiseDocumental.descricao}" ></span></a></td>
+											 
+										</tr>
+			 							<tr th:if="${#lists.isEmpty(analisesDocumentais)}">
+											<td colspan="2"><font color="red">Não existem mensagens cadastradas</font></td>
+										</tr>
+									</tbody> 
+								</table>
+							
+								<form th:action="@{/analise/{id}(id=${dadosIniciais.id})}" method="get">
+									<button class="btn  btn-primary btn-atualizar-mensagens" type="submit">Atualizar</button>
+								</form>
+						</div>
+					</div>
+					</div>							
+								
+					
+					</div>
+				
+									
+			<!-- </form>  -->
+			
+			<!-- <div align="left" th:unless=${#lists.isEmpty(responsaveis)}>
+				<a  th:href="@{/composicao-familiar/novo}" class="btn btn-primary">Avançar</a>
+			</div> -->
+			
+			</div>					
+  
+
+<div class="modal fade info-renda" id="modalInfo" tabindex="-1" role="dialog"  th:fragment="modal">
+	 				<div class="modal-dialog  modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Texto do Email</h4>
+					</div>
+					
+					<div class="modal-body">
+						<span id = "apresenta-email"></span>						
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	
+	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/upload.min.js}"></script>	
+	<!-- <script th:src="@{/javascripts/email-botoes-submit.js}"></script> -->
+	<script th:src="@{/javascripts/cadastro-analise-documental-email.js}"></script>
+	<script th:src="@{/javascripts/cadastro_analise_tecnica_parecer.js}"></script>
+	<script th:src="@{/javascripts/cadastro-analise-tecnica-financeira.js}"></script>
+	<script th:src="@{/javascripts/listar-mensagens-emails.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	
+	<script type="text/javascript">
+        $('.titulo').on('click', function(event){
+        	console.log(event.target.innerHTML);
+        	console.log('valor', $(event.target).val());
+        	console.log('texto', $(event.target).text());
+        	var texto = event.target.innerHTML;
+        	$('#apresenta-email').text(texto)
+        })
+    </script>	
+	
+	<script>
+		$(function(){
+			var settings = {
+					type: "json",
+					filelimit: "1",
+					allow: '*.(pdf)', 
+					action: '/sigas/arquivo',
+					complete: function(resposta){
+						console.log('resposta', resposta)
+						$('input[name=nomeArquivo]').val(resposta.nome)
+					}  
+					
+			};
+			
+			UIkit.uploadSelect($('#upload-select'), settings);
+		})
+	
+	</script>		
+</th:block>
+
+</body>
+</html>

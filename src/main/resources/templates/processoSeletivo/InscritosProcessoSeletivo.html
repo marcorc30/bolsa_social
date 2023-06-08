@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	
+<head>
+	<title>Pesquisa Inscritos no Processo Seletivo</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+	
+</head>	
+
+<body>
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-10">
+				  <h1>Solicitações do Processo Seletivo</h1>
+	 				  <h5>Processo Seletivo:<font color="blue"><span th:text="| ${processo.descricao}|" >Processo Seletivo 01/2023</span></font></h5>
+	 				  <h5>Unidade:<font color="blue"><span th:text="| ${processo.unidade.nome}|" >Processo Seletivo 01/2023</span></font></h5>
+	 				  
+				  
+			</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/processos}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Processos Seletivos</span>
+					</a>
+				</div>
+			</div>
+		  </div> 
+		</div>
+		</div>
+		
+	<div class="container-fluid">
+<!-- 		<button type="button" class="btn btn-success btn-lg mt-2 ml-2" data-toggle="modal" data-target=".bd-aluno-modal-sm">Novo Processo Seletivo</button> -->
+	</div>		
+
+	<div class="container-fluid">	
+		<form method="get" th:object="${solicitacaoFilter}">
+		
+			<div class="row">
+				<!-- <input type="number" th:field="*{processoId}" th:value="${processo.id}"> -->
+				
+				
+<!-- 				<div class="form-group col-sm-5">
+					<label class="control-label">Status da Solicitação</label>
+					<select class="form-control" id="unidade" th:field="*{status}">
+						<option value="">Todos os Status</option>
+						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_CIBS')">
+							<option value="ANALISADO">Analisado</option>
+							<option value="FINALIZADO">Finalizado</option>
+						</th:block>
+						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_ASSISTENTE')">
+							<option th:each="status : ${listaStatus}" th:value="${status}" th:text="${status.descricao}" ></option>
+						</th:block>
+					</select>
+				</div> -->
+				
+				<div class="form-group col-sm-3">
+					<label class="control-label">Status da Solicitação</label>
+					<select class="form-control" id="unidade" th:field="*{status}">
+							<option value="">Todos os Status</option>
+							<option value="todos">Todos, exceto cancelados</option>
+							<option th:each="status : ${listaStatus}" th:value="${status}" th:text="${status.descricao}" ></option>
+					</select>
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="control-label">Informe o nome ou parte:</label>
+					<input class="form-control" type="text" id="nome" th:field="*{nome}">
+				</div>
+				<div class="form-group col-sm-3">
+					<label class="control-label">Informe o protocolo ou parte:</label>
+					<input class="form-control" type="text" id="protocolo" th:field="*{protocolo}">
+				</div>
+				
+				<div class="form-group col-sm-3">
+					<label class="control-label">Ordenar Por:</label>
+					<select class="form-control" id="unidade" th:field="*{ordenarPor}">
+							<option value="">Sem Ordenação</option>
+							<option value="IC">IC</option>
+							<option value="Nome">Nome do Candidato</option>
+							<option value="Renda Bruta">Renda Bruta</option>
+					</select>
+				</div>
+				
+				
+			
+			</div> 
+		
+			<button type="submit" class="btn btn-primary">Pesquisar</button>
+			
+		</form>
+
+		<div class="table-responsive  bw-tabela-simples tabela-simples">
+			<table class="table  table-hover">
+				<thead>
+					<tr>
+						<!-- <th>Id</th> -->
+						<!-- <th>Solicitacao</th> -->
+						<th>Protocolo</th>
+ 						<th>Candidato</th>
+ 						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_ASSISTENTE')">
+							<td align="right"><strong>Renda Bruta</strong></td>
+							<td align="right"><strong>Despesas</strong></td>
+							<th>Ficha Socioeconômica</th>
+							<th>Analisar Processo</th>
+						</th:block>
+ 						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_CIBS')">
+							<td><strong>Qtde Irmaos</strong></td>
+							<td><strong>Cad Único</strong></td>
+							<th>Mora Perto</th>
+							<th>IC</th>
+						</th:block>
+						
+						<th>Analise CIBS</th>
+						<th>Status</th>
+				</thead>
+				
+				
+			
+				<tbody>
+					<tr th:each="solicitacao : ${solicitacoes}">
+						<!-- <td th:text="${solicitacao.id}">126</td> -->
+						<td th:text="${solicitacao.protocolo}">2023.0001.0030.0040</td>
+ 						<td th:text="${solicitacao.nome}">Joana Prado Dias</td>
+ 						
+ 						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_ASSISTENTE')">
+							<td th:text="|RS ${{solicitacao.rendaBruta}}|" align="right">R$ 1.200,00</td>
+							<td th:text="|RS ${{solicitacao.despesa}}|" align="right">R$ 800,00</td>
+							<td align="center">
+								<a th:href="@{/relatorios/ficha-inscricao-cibs/{id}(id=${solicitacao.id})}" target="_blank">
+									<i class="glyphicon glyphicon-duplicate"></i>
+								</a>
+						    </td>
+						    <td class="text-center">
+								<th:block th:switch="${solicitacao.status}">
+									<span th:case="EM_PREENCHIMENTO">
+										<a th:href="@{/solicitacao/visualizar-pendencia/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Visualizar Pendências"> 
+											<font color="green"><i class="glyphicon glyphicon-zoom-in"></i></font>
+										</a>
+									</span>
+									<span th:case="CANCELADO">
+										<a th:href="@{/solicitacao/visualizar_motivo_cancelamento/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Visualizar Motivo Cancelamento"> 
+											<font color="red"><i class="glyphicon glyphicon-remove"></i></font>
+										</a>
+									</span>
+									<span th:case="*">
+										<a th:href="@{/analise/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Analisar Processo"> 
+											<i class="glyphicon glyphicon-folder-open"></i>
+										</a>
+									</span>
+									
+								</th:block>
+							</td>
+						    
+						    
+<!-- 							<td class="text-center">
+								<a th:href="@{/analise/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Analisar Processo"> 
+									<i class="glyphicon glyphicon-zoom-in"></i>
+								</a>
+							</td> -->
+							
+							
+							
+							
+						</th:block>
+						<th:block sec:authorize="hasRole('ROLE_VISUALIZAR_DADOS_CIBS')">
+							<td th:text="${solicitacao.qtdIrmaos}">1</td>
+							<td th:text="${solicitacao.cadunico} ? 'Sim' : 'Não'">1</td>
+							<td th:text="${solicitacao.moraperto} ? 'Sim' : 'Não'" >1</td>
+							<td th:text="${solicitacao.ic}">1</td>
+						</th:block>
+<!-- 							<td class="text-center">
+								<a th:href="@{/analise-cibs/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Analise CIBS"> 
+									<th:block th:switch="${solicitacao.status}">
+									<span th:case="ANALISADO"><i class="glyphicon glyphicon-list-alt"></i></span>
+									<span th:case="FINALIZADO"><i class="glyphicon glyphicon-list-alt"></i></span>
+									</th:block>
+								</a>
+							</td> -->
+							
+							<td th:switch="${solicitacao.status}">
+							  <a th:href="@{/analise-cibs/{id}(id=${solicitacao.id})}">  <i class="glyphicon glyphicon-list-alt" th:case="ANALISADO" ></i></a>        
+							  <a th:href="@{/relatorios/ficha-cibs/{id}(id=${solicitacao.id})}" target="_blank"><i class="glyphicon glyphicon-print" th:case="FINALIZADO"></i></a>  
+							</td>							
+							
+							
+							
+				            <td th:switch="${solicitacao.status}">
+						      <a th:href="@{/solicitacao/alterarStatus/{id}(id=${solicitacao.id})}">  <span class="label label-danger" th:case="EM_PREENCHIMENTO" th:text="${solicitacao.status}">Em Preenchimento</span></a>    
+							  <a th:href="@{/solicitacao/alterarStatus/{id}(id=${solicitacao.id})}">  <span class="label label-default" th:case="PREENCHIDO" th:text="${solicitacao.status}">Em Preenchimento</span></a>
+							  <a th:href="@{/solicitacao/alterarStatus/{id}(id=${solicitacao.id})}">  <span class="label label-warning" th:case="PENDENCIA_DOCUMENTOS" th:text="${solicitacao.status}">Em Preenchimento</span></a>        
+							  <span class="label label-info" th:case="ANALISADO" th:text="${solicitacao.status}">Em Preenchimento</span>        
+							  <span class="label label-success" th:case="FINALIZADO" th:text="${solicitacao.status}">Em Preenchimento</span>  
+							  <a th:href="@{/solicitacao/alterarStatus/{id}(id=${solicitacao.id})}">  <span class="label label-primary" th:case="DOC_ENVIADO" th:text="${solicitacao.status}">Em Preenchimento</span></a> 
+							  <span class="js-status-solicitacao" th:case="CANCELADO" th:text="${solicitacao.status}">Em Preenchimento</span> 
+							   
+							</td>
+						
+						
+					</tr>
+					<tr th:if="${#lists.isEmpty(solicitacoes)}">
+						<td colspan="4"><font color="red">Nenhuma inscrição cadastrada nesse processo</font></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+		
+		<div class="col-sm-12 text-center" >
+			<nav>
+				<ul class="pagination pagination-sm">
+					<li>
+					</li>
+					
+					<li>
+					</li>
+				
+					<li>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+</th:block>	
+</body>
+
+</html>

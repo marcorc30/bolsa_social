@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Responsável</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+
+	
+</head>	
+
+<body>
+ 
+	<section layout:fragment="conteudo">	
+			<div class="page-header">
+						<div class="container-fluid">
+						  <div class="row">
+						    <div class="col-sm-10">
+			 				  <h1>Cadastro do Processo Seletivo</h1>
+		 					</div>  
+						  </div> 
+						</div>
+					</div>
+					
+			<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>		
+				<div class="container-fluid">
+					<form method="post" th:object="${processoSeletivo}" class="form-vertical  js-form-loading">
+
+						<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+						
+						<table class="table">
+						     <tr>
+						        <td><strong>1. Selecione o Estado</strong></td>
+	 							<td>
+									<div class="form-group">
+										<select id="input-responsavel_estado"  class="form-control" >
+											<option value="">Estado</option> 
+											<option value="DF">DF</option> 
+											<option value="SP">SP</option>
+											<option value="RJ">RJ</option> 											 
+										</select>
+									</div>	 							
+								</td>	
+								<td>
+								</td>						        
+						     </tr>
+						     <tr>
+						        <td><strong>2. Selecione a Unidade</strong></td>
+	 							<td>
+									<div class="form-group">
+										<select class="form-control" >
+											<option value="">Unidade </option> 
+											<option value="abel">Colégio La Salle Brasília</option> 
+											<option value="abel">Colégio La Salle Águas Claras</option> 
+										</select>
+									</div>	 							
+								</td>	
+								<td>
+								</td>						        
+						     </tr>
+						     <tr>
+						        <td><strong>3. Nome do Processo Seletivo</strong></td>
+	 							<td>
+	 								<input type="text" class="form-control" th:field="*{descricao}"/>
+								</td>	
+								<td>
+								   <input class="form-control" placeholder="Ano de vigência no formato AAAA" type="text" value=""/>
+								</td>						        
+						     </tr>
+							<tr>
+						        <td><strong>4. Tipo de Processo</strong></td>
+	 							<td>
+									<div class="form-group">
+										<select class="form-control" >
+											<option value="">Tipo</option> 
+											<option value="abel">Renovação de Bolsa</option> 
+											<option value="abel">Bolsas Novas</option> 
+										</select>
+									</div>	 							
+								</td>	
+								<td>
+								</td>						        
+						     </tr>						     
+						     
+						     
+						</table>	
+	
+						<div class="row">
+					    	<div class="col-md-12">
+					            <div class="panel with-nav-tabs panel-default">
+					                <div class="panel-heading">
+					                        <ul class="nav nav-tabs">
+					                            <li class="active"><a href="#tab1default" data-toggle="tab">Cadastro do Processo - Etapa 1</a></li>
+					                            <li><a href="#tab2default" data-toggle="tab">Cadastro do Processo - Etapa 2</a></li>
+					                        </ul>
+					                </div>
+					                <div class="panel-body">
+					                    <div class="tab-content">
+					                        <div class="tab-pane fade in active" id="tab1default">
+					                        
+													<table class="table">     
+													     <tr>
+													        <td><strong>4. Data para Divulgação do Edital da Bolsa</strong></td>
+								 							<td>
+														      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="dataReserva" class="form-control js-date" th:field="*{divulgacaoEdital}" autocomplete="off" placeholder="Data">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>   
+															</td>	
+															<td>
+															</td>						        
+													     </tr>
+													     <tr>
+													        <td><strong>5. Preenchimento do cadastro do candidato e upload dos documentos</strong></td>
+								 							<td>
+															   <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="preenchimentoCadastroInicio" class="form-control js-date" th:field="*{preenchimentoCadastroInicio}" autocomplete="off" placeholder="Data Início">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>	 							
+															</td>	
+															<td>
+														      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="preenchimentoCadastroFim" class="form-control js-date" th:field="*{preenchimentoCadastroFim}" autocomplete="off" placeholder="Data Fim">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>   								
+															</td>		
+													     </tr>
+													     <tr>
+													        <td><strong>6. Análise do perfil sócioeconômico, entrevistas e agenda para visita domiciliar, se necessário.</strong></td>
+								 							<td>
+														      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="analisePerfilInicio" class="form-control js-date" th:field="*{analisePerfilInicio}" autocomplete="off" placeholder="Data Início">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>   
+															</td>	
+															<td>
+															  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="analisePerfilFim" class="form-control js-date" th:field="*{analisePerfilFim}" autocomplete="off" placeholder="Data Fim">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>  								
+															</td>						        
+													     </tr>
+													     <tr>
+													        <td><strong>7. Validação Interna da Comissão de Bolsa Social</strong></td>
+								 							<td>
+														      <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="validacaoComissaoInternaInicio" class="form-control js-date" th:field="*{validacaoComissaoInternaInicio}" autocomplete="off" placeholder="Data Início">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>   
+															</td>	
+															<td>
+																<div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="validacaoComissaoInternaFim" class="form-control js-date" th:field="*{validacaoComissaoInternaFim}" autocomplete="off" placeholder="Data Fim">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+																</div>		      								
+															</td>						        
+													     </tr>
+													     <tr>
+													        <td><strong>8. Resultado dos pré-selecionados à concessão de Bolsa Social</strong></td>
+								 							<td>
+															  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="resultadoInicio" class="form-control js-date" th:field="*{resultadoInicio}" autocomplete="off" placeholder="Data Início">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>	 							
+															</td>	
+															<td>
+															   <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="resultadoFim" class="form-control js-date" th:field="*{resultadoFim}" autocomplete="off" placeholder="Data Fim">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div>   								
+															</td>						        
+													     </tr>
+													     <tr>
+													        <td><strong>9. Efetivação da Bolsa Social por meio de assinatura do contrato e do termo aditivo</strong></td>
+								 							<td>
+															  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="efetivacaoConcessaoBolsaInicio" class="form-control js-date" th:field="*{efetivacaoConcessaoBolsaInicio}" autocomplete="off" placeholder="Data Início">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div> 	 							
+															</td>	
+															<td>
+															  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+														              data-date-today-highlight="true" data-date-autoclose="true" >
+															      <input type="text" id="efetivacaoConcessaoBolsaFim" class="form-control js-date" th:field="*{efetivacaoConcessaoBolsaFim}" autocomplete="off" placeholder="Data Fim">
+															      <div class="input-group-addon">
+															         <span class="glyphicon glyphicon-th"></span>
+															      </div>
+															   </div> 								
+															</td>						        
+													     </tr>
+													  </table>  
+													  <div class="form-group">
+															<button class="btn  btn-primary" type="submit">Salvar</button>
+									 				   </div>	                      
+					                        </div>
+					                        <div class="tab-pane fade" id="tab2default">
+					                        
+					                        <div class="row">
+												<div class="col-sm-4" >
+													<div class="form-group">
+														<label class="control-label" for="input-curso">Curso - Segmento - Ano/Série</label> 
+														<select id="input-curso"  class="form-control" >
+															<option value="">Curso </option> 
+															<option value="abel">1º Ano - Ensino Médio</option> 
+															<option value="abel">2º Ano - Ensino Médio</option> 
+															<option value="abel">3º Ano - Ensino Médio</option> 
+														</select>
+													</div>
+												</div>
+						   						<div class="col-sm-4" >
+													<div class="form-group">
+														<label class="control-label" for="input-bolsa100">Qtde Bolsa 100%</label> 
+														<input
+															id="input-bolsa100" type="text" class="form-control js-inteiro" />
+													</div>
+												</div>
+						   						<div class="col-sm-4" >
+													<div class="form-group">
+														<label class="control-label" for="input-bolsa50">Qtde Bolsa 50%</label> 
+														<input
+															id="input-bolsa50" type="text" class="form-control js-inteiro" />
+													</div>
+												</div>
+											</div>
+											  <div class="form-group">
+													<button class="btn  btn-primary" type="submit">Salvar</button>
+							 				   </div>	                      
+					                        
+					                        
+					         <table class="table table-hover table-consulta">
+							       <thead>
+							       	  <tr>
+							       	    <th>Curso - Segmento - Ano/Série</th>
+							       	    <th>Previstas - Qtde Bolsa 100%</th>
+							       	    <th>Previstas - Qtde Bolsa 50%</th>
+							       	    <th>Alterar</th>
+							       	    <th>Excluir</th>
+							       	    <th>Deferidas - Qtde Bolsa 100%</th>
+							       	    <th>Deferidas -  Qtde Bolsa 50%</th>
+							       	  </tr> 	
+							       </thead>
+							       
+							       <tbody>
+							          <tr>
+								            <td>Educ Infantil - Pré I</td>
+								            <td>15</td>
+											<td>20</td>
+								
+											 <td class="text-center">
+												<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+												   <i class="glyphicon glyphicon-pencil"></i>
+												</a>
+											 </td>
+											 <td class="text-center">	
+												<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											 </td>
+								            <td>0</td>
+											<td>0</td>
+							           </tr>  
+							          <tr>
+								            <td>Ens Fund Séries Iniciais - 1º Ano</td>
+								            <td>20</td>
+											<td>40</td>
+								
+											<td class="text-center">
+												<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+												   <i class="glyphicon glyphicon-pencil"></i>
+												</a>
+											 </td>
+											 <td class="text-center">	
+												<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											 </td>
+
+								            <td>0</td>
+											<td>0</td>
+							           </tr>  
+							          <tr>
+								            <td>Ens Fund Séries Iniciais - 2º Ano</td>
+								            <td>30</td>
+											<td>20</td>
+								
+										     <td class="text-center">
+												<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+												   <i class="glyphicon glyphicon-pencil"></i>
+												</a>
+											 </td>
+											 <td class="text-center">	
+												<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											 </td>
+
+								            <td>0</td>
+											<td>0</td>
+							           </tr>  
+							          <tr>
+								            <td>Ens Fund Séries Iniciais - 3º Ano</td>
+								            <td>15</td>
+											<td>20</td>
+											 <td class="text-center">
+												<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+												   <i class="glyphicon glyphicon-pencil"></i>
+												</a>
+											 </td>
+											 <td class="text-center">	
+												<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+													<i class="glyphicon glyphicon-remove"></i>
+												</a>
+											 </td>
+								            <td>0</td>
+											<td>0</td>
+							           </tr>  
+							          
+							       </tbody>
+							    </table>               
+					                        
+					                        
+					                        
+					                        
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+						</div>	
+						
+						
+			</form>
+		</div>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+
+	
+	
+</th:block>
+
+</body>
+</html>

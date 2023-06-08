@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Usuários</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+	
+</head>	
+
+<body>
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-10">
+				  <h1>Usuários</h1>
+			</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+<!-- 					<a class="btn  btn-default" th:href="@{/processos/novo}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Cadastrar Processo Seletivo</span>
+					</a>
+ -->				</div>
+			</div>
+		  </div> 
+		</div>
+		</div>
+		
+	<div class="container-fluid">
+		<a class="btn btn-success btn-lg mt-2 ml-2 botao-novo-processo-seletivo"  th:href="@{/usuarios/novo}">
+			<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo Usuário</span>
+		</a>
+<!-- 		<button type="button" class="btn btn-success btn-lg mt-2 ml-2" data-toggle="modal" data-target=".bd-aluno-modal-sm">Novo Processo Seletivo</button> -->
+	</div>		
+
+	<div class="container-fluid">	
+		<form method="get" th:object="${usuarioFilter}">
+		
+			<div class="row">
+				<div class="form-group col-sm-4">
+					<label class="control-label">CPF</label>
+					<input class="form-control" type="text" id="cpf" th:field="*{cpf}">
+				</div>
+				
+				<div class="form-group col-sm-4">
+					<label class="control-label">Nome</label>
+					<input class="form-control" type="text" id="nome" th:field="*{nome}">
+				</div>
+
+				<div class="form-group col-sm-4">
+					<label class="control-label">Email</label>
+					<input class="form-control " type="text" id="email" th:field="*{email}">
+				</div>
+			</div>
+			<div class="row">
+			  <div class="form-group col-sm-12">
+				<th:block th:each="grupo : ${grupos}">
+					<div class="checkbox checkbox-inline">
+						<input type="checkbox" th:value="${grupo.id}" th:field="*{grupos}">
+		                <label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">Assistente Social</label>
+					</div>
+				</th:block>
+			   </div>
+			</div>
+		
+			<button type="submit" class="btn btn-primary botao-pesquisar">Pesquisar</button>
+		</form>
+
+		<div class="table-responsive  bw-tabela-simples tabela-simples">
+			<table class="table  table-hover">
+				<thead>
+					<tr>
+						<th>CPF</th>
+						<th>Nome</th>
+						<th>Email</th>
+						<th>Grupo</th>
+						<th>Status</th>
+						<th>Unidades</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="usuario : ${pagina.conteudo}">
+						<td th:text="${usuario.cpf}"></td>
+						<td th:text="${usuario.nome}"></td>
+						<td th:text="${usuario.email}">
+						<td>
+							<span th:each="grupo : ${usuario.grupos}" th:text="|${grupo.nome}${grupoStat.last ? '' : ', '}|"></span>
+						</td>
+						<td>
+							<th:block th:if="${usuario.ativo}">
+								<span class="label label-success">Ativo</span>
+							</th:block>
+							<th:block th:unless="${usuario.ativo}">
+								<span class="label label-danger">Inativo</span>
+							</th:block>
+						</td>
+				
+						<td class="text-center">
+							<a th:href="@{/usuarios/vincular/{id}(id=${usuario.id})}" class="btn  btn-link  btn-xs" title=" Vincular Unidades"> 
+			 					<i class="glyphicon glyphicon-education"></i>
+							</a>
+						</td>
+						
+						<td class="text-center">
+							<a class="btn  btn-link  btn-xs js-tootip " title="Editar" th:href="@{/usuarios/{id}(id=${usuario.id})}"> 
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a>
+<!-- 							<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#" 
+									data:url="@{/processos/{id}(id=${processo.id})}"
+									data:objeto="${processo.descricao}" 
+									>
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>
+ -->
+ 							<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#" >
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>
+ 							
+							
+						</td>
+						
+					</tr>
+					
+					<tr th:if="${pagina.vazia}">
+						<td colspan=6><font color="red">Nenhum Processo Encontrado</font></td>
+					</tr>
+					
+				</tbody>
+			</table> 
+		</div>	
+		
+		<div class="col-sm-12 text-center" th:if="${not pagina.vazia}" >
+			<nav>
+				<ul class="pagination pagination-sm" th:with="paginaAtual=${pagina.atual}">
+					<li th:class="${pagina.primeira} ? disabled">
+						<a th:href="${pagina.urlParaPagina(paginaAtual - 1)}" th:remove="${pagina.primeira} ? tag"><span>&laquo;</span></a>
+					</li>
+					
+					<th:block th:each="p : ${#numbers.sequence(1, pagina.total)}" th:with="numeroPagina=${p - 1}">
+						<li th:class="${paginaAtual == numeroPagina} ? active">
+							<a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+						</li>
+					</th:block>
+				
+					<li th:class="${pagina.ultima} ? disabled">
+						<a th:href="${pagina.urlParaPagina(paginaAtual + 1)}" th:remove="${pagina.ultima} ? tag"><span>&raquo;</span></a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	
+	
+	</div>
+
+
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+</th:block>	
+</body>
+
+</html>

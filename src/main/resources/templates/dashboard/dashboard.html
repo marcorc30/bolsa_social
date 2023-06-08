@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Responsável</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.css}">
+</head>	
+
+<body>
+
+	<section layout:fragment="conteudo">
+
+
+<div class="page-header">
+  <div class="container-fluid">
+    <h1>
+      Dashboard
+    </h1>
+  </div>
+</div>
+
+<div class="container-fluid">
+
+  <form method="post">
+		  <div class="row">
+			<div class="col-sm-6">
+				<div class="form-group" >
+					<label class="control-label">Informe o Ano:<font color="red">*</font></label>
+					<select class="form-control" name="ano">
+						<option selected="selected" value="" >Selecione...</option>
+					    <option th:each="ano : ${anos}" th:text="${ano}" th:value="${ano}" >2023</option>
+		            </select>				
+		         </div>
+		      </div>	 
+		      <div class="col-sm-6">
+				<div class="form-group" >
+					<label class="control-label">Informe a Unidade:<font color="red">*</font></label>
+					<select class="form-control" name="unidade">
+						<option selected="selected" value="" >Selecione...</option>
+						<option value="0">Todas as Unidades</option>
+					    <option th:each="unidade : ${unidades}" th:text="${unidade.nome}" th:value="${unidade.id}" >La Salle Brasilia</option>
+		            </select>				
+		         </div>
+		      </div>
+		  </div>
+		  <div class="row">
+		      <div class="col-sm-4 form-group">
+		      	<button type="submit" class="btn btn-primary">Filtrar</button>
+		      </div>	 
+		  </div>
+  </form>	
+
+  
+  <div class="row">
+    <div class="col-sm-4">
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-bank  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" th:text="${total100}">---</div>
+        <div class="aw-box__title">Gratuidade de 100%</div>
+      </div>
+    
+    </div>
+
+    <div class="col-sm-4">
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-usd  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" th:text="${total50}">---</div>
+        <div class="aw-box__title">Gratuidade de 50%</div>
+      </div>
+    
+    </div>
+    
+    <div class="col-sm-4">
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-heartbeat  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" th:text="${totalGratuidade}">---</div>
+        <div class="aw-box__title">Total de Gratuidade</div>
+      </div>
+    
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12"> 
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-users  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" th:text="${totalInscricoes}"></div>
+        <div class="aw-box__title">Total de Alunos Inscritos</div>
+      </div>
+    
+    </div>
+    
+    <!-- <div class="col-sm-4">
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-battery-empty  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" >---</div>
+        <div class="aw-box__title">Total Bolsistas 100%</div>
+      </div>
+    
+    </div>
+    
+    <div class="col-sm-4">
+    
+      <div class="aw-box">
+        <div class="aw-box__icon">
+          <i class="fa  fa-truck  fa-3x"></i>
+        </div>
+        <div class="aw-box__value" th:text="${total50}">---</div>
+        <div class="aw-box__title">Total Bolsistas 50%</div>
+      </div>
+    
+    </div> -->
+  </div>
+
+  <div class="row">
+    <!-- <div class="col-sm-6">
+      <div class="aw-graph-box">
+        <div class="aw-graph-box__header">
+          <h2 class="aw-graph-box__title">Total Indeferido <small>Ano 2022</small></h2>
+        </div>
+        <div class="aw-graph-box__content">
+          <div class="aw-graph-box__no-data">
+              <i class="fa  fa-line-chart  fa-2x"></i>
+              <span>Não há dados</span>
+          </div>
+
+          <div>
+            <canvas id="lineChart" height="160"></canvas>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <div class="col-sm-12">
+      <div class="aw-graph-box">
+        <div class="aw-graph-box__header">
+          <h2 class="aw-graph-box__title">Quantidade de Inscritos por Unidade <small></small></h2>
+        </div>
+        <div class="aw-graph-box__content" style="position: relative">
+          <!-- <div class="aw-graph-box__no-data">
+              <i class="fa  fa-line-chart  fa-2x"></i>
+              <span>Não há dados</span>
+          </div> -->
+
+          <div>
+            <canvas id="graficoPorEmpresa" height="160"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+	</section>
+	
+
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/Chart.min.js}"></script>
+	<script th:src="@{/javascripts/dashboard-total-por-empresa.js}"></script>
+</th:block>		
+
+</body>
+</html>

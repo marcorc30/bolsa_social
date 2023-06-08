@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro dos Bens Móveis</title>
+	
+	
+ </head>	
+
+<body>
+
+	<section layout:fragment="conteudo">		
+	
+		<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Finalização do Cadastro da Solicitação</h1>
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1"></p>
+			                      <!--   <p class="h6 text-muted mb-0 mb-lg-0">Cadastro das Rendas</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>	
+
+
+	<div class="jumbotron">
+ 
+ 				     <!--  <h1 align="center">Parabéns!!</h1>	 -->
+				 <p> 				      
+	 				  <h2 align="center">O cadastro da solicitação foi concluída com êxito. Aguarde maiores informações sobre o processo.</h2>
+	 				  <h3 align="center">A Rede La Salle agradece seu interesse em estudar em nossas Unidades.</h3>
+	 				  <h5 align="center">Serviço de Assistência Social - Rede La Salle</h5>
+				  </p>
+			  <div align="center">	
+				<a class="btn btn-success btn-lg mt-2 ml-2 botao-novo-processo-seletivo"  th:href="@{/relatorios/ficha-inscricao/{id}(id=${id})}" target="_blank">
+					<i class="glyphicon glyphicon-print"></i> <span class="hidden-xs  hidden-sm">Imprimir Ficha Solicitação</span>
+				</a>
+			  
+				<!-- <iframe width="560" height="315" 
+						src="https://www.youtube.com/embed/fzp299vczSA" 
+						title="YouTube video player" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+						allowfullscreen>
+				</iframe> -->
+			
+			
+				
+				<p><p><p><p><p><p><p><p>
+  
+  					<p><a class="btn btn-primary btn-lg" th:href="@{/solicitacao/pesquisar}" role="button">Finalizar e voltar para tela inicial</a></p>
+			</div>	 
+	
+</div>
+
+				
+	</section>
+ 
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/buscar-endereco.js}"></script>
+</th:block>	
+</body>
+
+</html>	

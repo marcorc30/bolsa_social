@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Análise CIBS</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+ 
+<body>
+
+<section layout:fragment="conteudo">		
+
+		<div class="page-header">
+			<div class="container-fluid">  
+			  <div class="row"> 
+			    <div class="col-sm-10">
+ 				  <h1>Resultado Final da Solicitação</h1> 
+ 				   	 <h5><font color="blue">Protocolo: <span th:text="${dadosIniciais.protocolo}"></span></font></h5>
+ 	 				 <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato.nome}"></span></font></h5>
+ 	 				 <h5><font color="blue">Processo Seletivo: <span th:text="|${dadosIniciais.processoSeletivo.id} - ${dadosIniciais.processoSeletivo.descricao}|"></span></font></h5>
+	 				 <h5><font color="blue">Unidade: <span th:text="|${dadosIniciais.unidade.id} - ${dadosIniciais.unidade.nome}|"></span></font></h5>
+	 				 <h5><font color="blue">Curso / Série / Turno: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.nivel.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span></font></h5>
+				</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+<!-- 					<a class="btn  btn-default" th:href="@{/processos/avaliar/{id}(id=${dadosIniciais.processoSeletivo.id})}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Listar Inscrições</span>
+					</a> -->
+				</div> 
+			</div>
+			  </div> 
+			</div>
+		</div>
+		
+	<div class="container-fluid">
+		<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>	
+				
+				<th:block th:if="${resultado.percentual.percentual} ne 'Indeferido'">
+					<h5><font color="red">Resultado: <span class='dados-solicitacao' th:text="|${resultado.percentual.percentual}|"></span></font></h5>
+					<h5><font color="red">Observação: <span class='dados-solicitacao' th:text="|${resultado.percentual.descricao}|"></span></font></h5>
+					<h5><font color="red">Período: <span class='dados-solicitacao' th:text="|da parcela ${resultado.parcelaInicial} até ${resultado.parcelaFinal}|"></span></font></h5>
+				</th:block>
+				<div class="row">
+			    	<div class="col-sm-12 form-group">
+			    		<label class="control-label"><font color="blue"><strong>Observações</strong></font></label>
+						<textarea rows=10 class="form-control" name="motivo" th:text="${texto}" readonly="readonly"></textarea>
+				    </div>
+				</div>		
+				
+					<a href="javascript:history.back()" class="btn  btn-primary">Voltar para onde estava</a>			
+						
+	</div>
+</section>
+</body>
+</html>

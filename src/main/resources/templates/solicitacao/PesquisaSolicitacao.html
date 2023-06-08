@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<title>Pesquisa Usuários</title>
+</head>
+
+<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}"  />
+
+<body>
+
+<section layout:fragment="conteudo">    
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Solicitação de Bolsa</h1>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+<!-- 	<div class="container-fluid">
+		<button type="button" class="btn btn-success btn-lg mt-2 ml-2" data-toggle="modal" data-target=".bd-aluno-modal-sm">Nova Solicitação de Bolsa</button>
+	</div>
+ -->	
+	<div class="container-fluid">
+		<!-- <button type="button" class="btn btn-success btn-lg mt-2 ml-2" th:href="@{/timeline/}">Nova Solicitação de Bolsa</button> -->
+		<a class="btn btn-success btn-lg mt-2 ml-2"  th:href="@{/timeline/}" >
+			<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Nova Solicitação de Bolsa</span>
+		</a>
+		
+		
+	</div>
+	
+	<p></p><p></p><p></p>
+
+	
+<!-- 		<div class="container-fluid">
+			<button type="button" class="btn btn-success btn-lg mt-2 ml-2 " data-togle="modal" data-target=".bd-example-modal-sm" > Nova Solicitação de Bolsa</button>
+		</div>
+ -->	
+		<!-- <div class="modal fade bd-aluno-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-sm">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+		    		<h2>Já é aluno da Rede La Salle?</h2>
+		    	</div>
+		    	<div align="center">
+		    		<img th:src="@{/layout/images/spinner.gif}" id="spinner" alt="spinner" >
+		    		<p id="mensagem-erro-ra-inexistente">RA não encontrada na base de dados</p>
+		    	</div>
+		    	<div class="modal-body" align="center">
+		    		<div class="radio radio-inline" >
+		    			<input type="radio" name="aluno" id="opcao-sim">
+		    			<label>Sim</label>
+		    		</div>
+		    		<div class="radio radio-inline">
+		    			<input type="radio" name="aluno" id="opcao-nao">
+		    			<label>Não</label>
+		    		</div>
+		    		<p></p><p></p><p></p>
+		    		
+		    		<div class="row" id="RA-aluno">
+		    			<div class="form-group col-sm-7">
+		    				<input type="text" class="form-control" id="raAluno" placeholder="Informe o RA" >
+		    			</div>
+			    		<div class="form-group col-sm-3">
+			    			<a href="" class="btn btn-primary" role="button" id="consultar-RA">Consultar</a>
+			    			<button class="btn btn-primary" id="consultar-RA" disabled>Consultar</button>
+			    		</div>
+		    		</div>
+		    		<div class="row">
+		    			<div class="form-group col-sm-12">
+		    				<span id="nome-aluno"></span>
+		    			</div>
+		    		</div>
+		    		
+		    		<div>
+		    		    <a th:href="@{/timeline/}" class="btn btn-success" role="button" id="botao-prosseguir">Prosseguir</a>
+			    		<button class="btn btn-success">Prosseguir</button>
+		    		</div>
+		    		
+		    	</div>
+		    </div>
+		  </div>
+		</div> -->
+	
+	
+  <div class="container-fluid">
+     <form method="get">
+		<div class="row">
+		   <div class=" form-group col-sm-6">
+		      <label class="control-label" for="nome-usuario">Nome</label>
+		      <input type="text" class="form-control" id="nome-usuario">
+		   </div>
+		   <div class="form-group col-sm-3">
+		   	  <button type="submit" class="btn btn-primary botao">Pesquisar</button>	
+		   </div>
+		</div> 
+     </form>
+     
+     
+     <table class="table table-hover table-consulta">
+       <thead>
+       	  <tr>
+       	    <th>Id</th>
+       	  	<th>Ano</th>
+       	    <th>Procolo</th>
+       	    <th>Unidade</th>
+       	    <th>Candidato</th>
+       	  <!--   <th>Grupos</th> -->
+        	<th>Status</th>
+ 			<th align="center">Formulário Solicitação</th>
+ 			<th>Resultado</th>
+       	  </tr> 	
+       </thead>
+       
+       <tbody>
+          <tr th:each="solicitacao :  ${solicitacoes}">
+			<td th:text="${solicitacao.id}">1</td>
+          	<td th:text="${solicitacao.ano}">2023</td>
+            <td th:text="${solicitacao.protocolo}">2023555444555</td>
+            <td th:text="${solicitacao.unidade.nome}">Colégio La Salle Brasília</td>
+            <td th:text="${solicitacao.candidatos.get(0).nome}">Janaína Souza Silva</td>
+            <!-- <td th:text="${solicitacao.status}">Em Preenchimento</td> -->
+            <td th:switch="${solicitacao.status}">
+				      <span class="label label-danger" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).EM_PREENCHIMENTO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>    
+					  <span class="label label-default" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).PREENCHIDO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>
+					  <span class="label label-warning" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).PENDENCIA_DOCUMENTOS}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>        
+					  <span class="label label-info" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).ANALISADO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>        
+					  <span class="label label-success" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).FINALIZADO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>
+					  <span class="label label-primary" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).DOC_ENVIADO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>        
+					  <span class="js-status-solicitacao" th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).CANCELADO}" th:text="${solicitacao.status.descricao}">Em Preenchimento</span>        
+
+			</td>
+			
+			
+			<td align="center">
+				<a th:href="@{/relatorios/ficha-inscricao/{id}(id=${solicitacao.id})}" target="_blank">
+					<i class="glyphicon glyphicon-duplicate"></i>
+				</a>
+			</td>
+
+			<td>
+				<th:block th:if="${solicitacao.processoSeletivo.mostraBotaoResultado and solicitacao.mostrarBotaoResultado}">
+					<a th:href="@{/solicitacao/visualizar-resultado/{id}(id=${solicitacao.id})}"> <span class="label label-success">Disponivel</span></a>
+				</th:block>
+				<th:block th:unless="${solicitacao.processoSeletivo.mostraBotaoResultado}">
+				</th:block>
+			
+			</td> 			
+
+
+		    <td class="text-center">
+				<th:block th:switch="${solicitacao.status}">
+					<span th:case="${T(org.lasalle.sigas.model.StatusSolicitacao).CANCELADO}">
+						<a th:href="@{/solicitacao/visualizar_motivo_cancelamento_solicitante/{id}(id=${solicitacao.id})}" class="btn  btn-link  btn-xs" title="Visualizar Motivo Cancelamento"> 
+							<font color="red"><i class="glyphicon glyphicon-remove"></i></font>
+						</a>
+					</span>
+					<span th:case="*">
+							<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/solicitacao/alterar/{id}(id=${solicitacao.id})}">
+							   <i class="glyphicon glyphicon-pencil"></i>
+							</a>
+					</span>
+					
+				</th:block>
+		
+			</td>
+<!-- 			<td class="text-center">
+				<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/solicitacao/alterar/{id}(id=${solicitacao.id})}">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+			</td>      -->    
+			
+			
+          </tr>  
+          <tr th:if="${#lists.isEmpty(solicitacoes)}">
+          	<td colspan="6"><font color="red">Nenhuma solicitação cadastrada</font></td>
+          </tr>
+       </tbody>
+     </table>
+     
+     
+  </div>  
+
+</section>
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  <script th:src="@{/javascripts/pesquisar-aluno.js}"></script>
+  
+</th:block>
+<script th:src="@{/javascripts/sigas.js}"></script>
+</body>
+
+</html>

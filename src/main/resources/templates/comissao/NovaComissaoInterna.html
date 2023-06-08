@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro do Candidato</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}"> -->
+</head>	
+
+<body>
+
+	<section layout:fragment="conteudo">	
+	
+			
+		<div class="page-header">
+			<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Cadastrar Comissão Interna da Bolsa Social </h1>
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/processos}">
+								<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisar Processo</span>
+							</a>
+						</div>
+					</div>
+				  </div> 
+				</div>
+			</div>	
+		
+		<div class="container-fluid">
+		<div class="panel panel-default" >
+			<div class="panel-heading">
+				<!-- <h4>Cadastro de Séries do Processo: </h4> -->
+			    <span>Processo Seletivo: <font color="blue"><span th:text="|${processoSeletivoId.id} - ${processoSeletivoId.descricao}|"></span> <span></span></font><small><font color="red"></font></small></span><p>
+				<span>Unidade: </span><font color="blue"><span th:text="${processoSeletivoId.unidade.nome}"></span></font></p>
+			</div>
+		    <div class="panel-body">
+			
+			<!-- <form method="post" th:action="@{/comissao/novo}" th:object="${comissaoInterna}"> -->
+			<form th:object="${comissaoInterna}" th:action="${comissaoInterna.novo} ? @{/comissao/novo} : @{/comissao/{id}(id=${comissaoInterna.id})}" th:method="post">
+			
+			 <input type="hidden" th:field="*{id}">
+			 <input type="hidden" th:field="*{processoSeletivo.id}">			 
+				<div class="row">
+					<div class=col-sm-4>
+						<div class="form-group">
+							<label class="control-label">Incluir Pessoa na Comissão</label>
+							<select  class="form-control" th:field="*{funcionario}">
+	
+								<option value="0">Selecione a pessoa</option>
+								<option th:each="funcionario : ${funcionarios}" th:text="${funcionario.nome}" th:value="${funcionario.id}">Amanda Nunes</option>
+							</select>
+						</div>
+					</div>
+					<div class=col-sm-4>
+						<div class="form-group">
+							<label class="control-label">Incluir a Função</label>
+							<select class="form-control" th:field="*{funcao}">
+								<option value="0">Selecione a função</option>
+								<option th:each="funcao : ${funcoes}" th:text="${funcao.descricao}" th:value="${funcao.id}">Assistente Social</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-4 form-group">
+				        <label class="control-label" >Status</label>
+				        <div>
+				           <input type="checkbox" class="js-status" data-size="small" data-off-color="danger"
+				                data-on-text="Ativo" data-off-text="Inativo" th:field="*{ativo}">
+				        </div>
+		  </div>
+					
+				</div>	
+			
+			
+				<div class="row">
+				 <div class="col-sm-4">
+				  <div class="form-group">
+						<button class="btn  btn-primary" type="submit">Salvar</button>
+				  </div>			
+				 </div>
+				</div>
+			</form>
+		</div>
+	</div>	
+			
+	<table class="table table-hover table-consulta">
+       <thead>
+       	  <tr>
+       	    <!-- <th>Cód Pessoa</th> -->
+       	    <th>Nome</th>
+       	    <th>Função CIBS</th>
+       	    <th>Status</th>
+       	    
+       	  </tr> 	
+       </thead>
+       
+       <tbody>
+          <tr th:each="comissao : ${comissoes}">
+            <!-- <td>01</td> -->
+            <td th:text="${comissao.funcionario.nome}">Maria Joana</td>
+			<td th:text="${comissao.funcao.descricao}">Assistente Social</td>
+			<td>
+				<th:block th:if="${comissao.ativo}">
+					<span class="label label-success">Ativo</span>
+				</th:block> 
+				<th:block th:unless="${comissao.ativo}">
+					<span class="label label-danger">Inativo</span>
+				</th:block>
+			</td>
+			 <td class="text-center">
+					<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/comissao/{id}/processo/{idProcesso}(id=${comissao.id}, idProcesso=${comissao.processoSeletivo.id})}">
+					   <i class="glyphicon glyphicon-pencil"></i>
+					</a>
+					
+					<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#"
+						data:url=@{/comissao/{id}(id=${comissao.id})}
+						data:objeto="${comissao.funcionario.nome}">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+					
+			 </td>        
+          </tr>  
+          <tr th:if=${#lists.isEmpty(comissoes)}>
+          	<td colspan="3"><font color="red">Não existe integrantes da comissão cadastrados</font></td>
+          </tr>
+       </tbody>
+     </table>
+			
+   </div>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/admin.js}"></script>
+  
+  <script>
+	$('.js-status').bootstrapSwitch();  
+  </script>
+</th:block>
+	
+</body>
+</html>	

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+<title>Cadastro Inicial</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+    	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">
+</head>
+<body>
+
+<section layout:fragment="conteudo">
+
+<!-- <div th:replace="timeline/timeline :: timeline"></div>	 -->
+
+
+<div class="page-header">
+	<div class="container-fluid">
+	  <div class="row">
+	    <div class="col-sm-10">
+<!-- 	    	<h1>Edital de Concessão de Bolsa Social</h1>
+ --> 		</div>  
+	  </div>
+	</div>
+</div>
+
+
+<div class="container-fluid">
+
+	
+	<form method="post" th:object="${dadosIniciaisSolicitante}">
+	
+
+	
+		<div id="modal-edital" class="modal fade" role="dialog">
+		      <div class="modal-dialog modal-lg">
+					 
+					
+		        	<!-- Conteúdo do modal-->
+			        <div class="modal-content">
+ 			
+			         	 <!-- Cabeçalho do modal -->
+				          <div class="modal-header">
+				            <div class="col-sm-10">
+					            <h4 class="modal-title"><strong>Leia o Edital de Concessão de Bolsa abaixo e concorde com os termos para prosseguir com a inscrição.</strong></h4>
+				            </div>
+				            <div class="col-sm-2">
+								<div class="aw-page-header-controls">
+									<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+										<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+					                        <div class="inner-circle"></div>
+					                        <p class="h6 mt-3 mb-1">2ª Etapa</p>
+					                     <!--    <p class="h6 text-muted mb-0 mb-lg-0">Cadastro dos Bens Móveis</p> -->
+					                    </div>						
+					                </div>    
+				                </div>
+				              </div>  				            
+				          </div>
+				
+				          <!-- Corpo do modal -->
+				          <div class="modal-body">              
+			          
+				          
+<!-- 				          <embed th:src="@{/arquivo/{nomeArquivo}(nomeArquivo = ${processoSeletivo.nomeArquivo})}" type="application/pdf" width="100%" height="100%" />
+ -->				         
+				         	 <!-- <embed th:src="@{/edital/{nomeArquivo}(nomeArquivo = ${processoSeletivo.nomeArquivo})}" type="application/pdf" width="100%" height="100%" /> -->
+				         	 <!-- <embed th:src="@{/arquivo/0c7f4b2c-66b8-4a8e-bd3c-d1f59e8c93e1_vendas-diarias.pdf}" type="application/pdf" width="100%" height="100%" /> -->
+
+
+			         	 
+						<object th:data="@{/arquivo/{nomeArquivo}(nomeArquivo = ${processoSeletivo.nomeArquivo})}" type="application/pdf"
+						        width="800" height="1200">
+						  <p>Visualize aqui o edital do processo seletivo.
+						    <a th:href="@{/arquivo/{nomeArquivo}(nomeArquivo = ${processoSeletivo.nomeArquivo})}" target="_blank">download do arquivo PDF.
+						    </a>
+						  </p>
+						</object>	
+				
+				         	 
+				          </div>
+				          				          
+				          <!-- Rodapé do modal-->
+				          <div class="modal-footer">
+				            
+					        <a th:href="@{/solicitacao/dadosIniciaisRetorno}" class="btn btn-danger" role="button">Discordo</a> 
+					        <a th:href="@{/candidatos/novo}" class="btn btn-primary" role="button">Concordo</a> 
+				            <!-- <button type="submit" class="btn btn-primary">Concordo</button> -->
+				          </div>
+			
+			        </div>
+		      </div>
+	    </div>
+    </form>
+</div>
+
+
+</section>
+
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+<script>
+		$(function(){
+			var settings = {
+					type: "json",
+					filelimit: "1",
+					allow: '*.(pdf)', 
+					action: '/plbolsa/arquivo',
+					complete: function(resposta){
+						console.log('resposta', resposta)
+						$('input[name=nomeArquivo]').val(resposta.nome)
+					}  
+					
+			};
+			
+			UIkit.uploadSelect($('#upload-select'), settings);
+		})
+	
+	</script>	  
+  <script>
+	$('.js-status').bootstrapSwitch();  
+	
+	$(window).load(function() {
+	    $('#modal-edital').modal('show');
+	});
+	
+  </script>
+</th:block>
+	
+
+
+</body>
+</html>

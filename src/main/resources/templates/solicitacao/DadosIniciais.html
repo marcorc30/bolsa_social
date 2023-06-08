@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+<title>Cadastro Inicial</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">
+
+</head>
+<body>
+
+
+<section layout:fragment="conteudo">
+
+	<!-- 	<div th:replace="timeline/timeline :: timeline"></div>	 -->
+	 
+<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Dados Iniciais</h1>
+<!-- 	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+	 				  <h5><font color="blue">Processo Seletivo: <span th:text="|${processoSeletivo.id} - ${processoSeletivo.descricao}|"></span></font></h5>
+	 				  <h5><font color="blue">Unidade: <span th:text="|${unidade.id} - ${unidade.nome}|"></span></font></h5>
+	 				  <h5><font color="blue"> Curso/Série: <span th:text="|${detalhesProcesso.serie.nivel.descricao} - ${detalhesProcesso.serie.descricao}|"></span></font></h5>
+ --><!-- 	 				  <h2 th:foreach="lista : ${lista}">Responsável: <span th:text="${lista.nome}">Marco</span></h2>
+ -->					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">1ª Etapa</p>
+			                     <!--    <p class="h6 text-muted mb-0 mb-lg-0">Cadastro dos Bens Móveis</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>
+
+	<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>
+
+<div class="container-fluid">
+
+	<!-- <div class="alert  alert-danger  alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<i class="fa  fa-exclamation-circle"></i> Já existe uma reserva com o nome informado.
+	</div> -->
+
+<!-- 	<form method="POST" th:object="${usuario}" class="form-vertical  js-form-loading"> -->
+	
+	<form method="post" th:action="@{/solicitacao/dadosIniciais}" th:object="${dadosIniciais}" >	
+	
+	<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+	
+			<div class="panel panel-default">
+						<div class="panel-heading"><h4>Informações adicionais para início da solicitação da Bolsa Social. <small><font color="red"></font></small></h4></div>
+						  <div class="panel-body">
+							<div class="row">	
+								<div class="col-sm-2" >
+									<div class="form-group">
+										<label class="control-label" for="input-estado-unidade">Estado da Unidade: <font color="red">*</font> </label> 
+										<select id="input-estado-unidade"  class="form-control" th:field="*{uf}" data:url="@{/unidades}">
+											<option value="">Selecione o Estado </option> 
+											<option th:each = "uf : ${lista}" th:value="${uf}" th:text="${uf}">DF</option> 
+										</select>
+									</div>
+								</div>
+								
+								<div class="col-sm-2" >
+									<div class="form-group">
+										<label class="control-label" for="input-unidade">Unidade: <font color="red">*</font></label> 
+										<select id="input-unidade"  class="form-control" th:field="*{unidade}" data:url="@{/processos}" >
+											<option value="">Selecione a Unidade </option> 
+											<!-- <option th:each = "unidade : ${unidades}" th:value="${unidade.id}" th:text="${unidade.nome}" >  -->
+										</select>
+									</div>
+								</div>
+		
+								<div class="col-sm-4" >
+									<div class="form-group">
+										<label class="control-label" for="input-responsavel_bairro">Processo Seletivo: <font color="red">*</font></label> 
+										<select id="input-processo-seletivo"  class="form-control" th:field="*{processoSeletivo}" data:url="@{/detalhesProcessos}" >
+											<option value="">Selecione o Processo </option> 
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-4" >
+									<div class="form-group">
+										<label class="control-label" for="input-responsavel_bairro">Série / Curso / Turno: <font color="red">*</font></label> 
+										<select id="input-serie"  class="form-control" th:field="*{detalhesProcessoSeletivo}">
+											<option value="">Selecione a Série </option> 
+										</select>
+									</div>
+								</div>
+								<!-- <div class="col-sm-2" >
+									<div class="form-group">
+										<label class="control-label" for="input-turno">Turno <font color="red">*</font></label> 
+										<select id="input-serie"  class="form-control" th:field="*{turno}">
+											<option value="">Selecione o Turno </option> 
+										</select>
+									</div>
+								</div> -->								
+							</div>	
+							<div class=row>
+								<div class="col-sm-12">
+								  <small><font color="red">(*) É obrigatório selecionar as informações acima.</font></small>
+								</div> 
+							</div>
+					  </div>
+					</div>     
+                     		
+	    <div class="form-group">
+	    
+<!-- 			<a th:href="@{/candidatos/edital}" class="btn btn-primary" role="button">Avançar</a> -->
+		
+			<button class="btn  btn-primary" type="submit">Avançar</button>
+		</div>
+	</form>
+</div>
+
+
+</section>
+
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-processos-seletivos.js}"></script>
+  <script th:src="@{/javascripts/pesquisar-detalhes-processo-seletivo.js}"></script>
+  
+  <script>
+	$('.js-status').bootstrapSwitch();  
+  </script>
+</th:block>
+	
+
+
+</body>
+</html>

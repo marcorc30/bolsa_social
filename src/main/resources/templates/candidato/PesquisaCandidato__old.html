@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<title>Pesquisa Usuários</title>
+</head>
+
+<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}"  />
+
+<body>
+
+<section layout:fragment="conteudo">    
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Solicitação de Bolsa</h1>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<button type="button" class="btn btn-success btn-lg mt-2 ml-2" data-toggle="modal" data-target=".bd-aluno-modal-sm">Nova Solicitação de Bolsa</button>
+	</div>
+	<p></p><p></p><p></p>
+
+	
+<!-- 		<div class="container-fluid">
+			<button type="button" class="btn btn-success btn-lg mt-2 ml-2 " data-togle="modal" data-target=".bd-example-modal-sm" > Nova Solicitação de Bolsa</button>
+		</div>
+ -->	
+		<div class="modal fade bd-aluno-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-sm">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+		    		<h2>Já é aluno da Rede La Salle?</h2>
+		    	</div>
+		    	<div align="center">
+		    		<img th:src="@{/layout/images/spinner.gif}" id="spinner" alt="spinner" >
+		    		<p id="mensagem-erro-ra-inexistente">RA não encontrada na base de dados</p>
+		    	</div>
+		    	<div class="modal-body" align="center">
+		    		<div class="radio radio-inline" >
+		    			<input type="radio" name="aluno" id="opcao-sim">
+		    			<label>Sim</label>
+		    		</div>
+		    		<div class="radio radio-inline">
+		    			<input type="radio" name="aluno" id="opcao-nao">
+		    			<label>Não</label>
+		    		</div>
+		    		<p></p><p></p><p></p>
+		    		
+		    		<div class="row" id="RA-aluno">
+		    			<div class="form-group col-sm-7">
+		    				<input type="text" class="form-control" id="raAluno" placeholder="Informe o RA" >
+		    			</div>
+			    		<div class="form-group col-sm-3">
+<!-- 			    			<a href="" class="btn btn-primary" role="button" id="consultar-RA">Consultar</a> -->
+			    			<button class="btn btn-primary" id="consultar-RA" disabled>Consultar</button>
+			    		</div>
+		    		</div>
+		    		<div class="row">
+		    			<div class="form-group col-sm-12">
+		    				<span id="nome-aluno"></span>
+		    			</div>
+		    		</div>
+		    		
+		    		<div>
+		    		    <a th:href="@{/solicitante/dadosIniciais}" class="btn btn-success" role="button" id="botao-prosseguir">Prosseguir</a>
+			    		<!-- <button class="btn btn-success">Prosseguir</button> -->
+		    		</div>
+		    		
+		    	</div>
+		    </div>
+		  </div>
+		</div>
+	
+	
+  <div class="container-fluid">
+     <form method="get">
+		<div class="row">
+		   <div class=" form-group col-sm-6">
+		      <label class="control-label" for="nome-usuario">Nome</label>
+		      <input type="text" class="form-control" id="nome-usuario">
+		   </div>
+		   <div class="form-group col-sm-3">
+		   	  <button type="submit" class="btn btn-primary botao">Pesquisar</button>	
+		   </div>
+		</div> 
+     </form>
+     
+     
+     <table class="table table-hover table-consulta">
+       <thead>
+       	  <tr>
+       	    <th>Nome</th>
+       	    <th>Unidade</th>
+<!--        	    <th>Grupos</th>
+ -->       	<th>Status</th>
+ 			<th align="center">Componentes Familiares</th> 
+ 			<th align="center">Responsável Financeiro</th> 
+       	  </tr> 	
+       </thead>
+       
+       <tbody>
+          <tr>
+            <td>Maria Joana</td>
+            <td>Colégio La Salle Brasília</td>
+			<td><span class="label label-danger">Em Preenchimento</span></td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			
+
+			 <td class="text-center">
+				<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+<!-- 				<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a> -->
+			 </td>        
+          </tr>  
+          <tr>
+            <td>Carolina Ferraz</td>
+            <td>Colégio La Salle Brasília</td>
+			<td><span class="label label-success">Concluído</span></td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			
+
+			 <td class="text-center">
+<!-- 				<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a> -->
+<!-- 				<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a> -->
+			 </td>        
+          </tr>  
+          <tr>
+            <td>João Neto da Silva</td>
+            <td>Colégio La Salle - Águas Claras</td>
+			<td><span class="label label-success">Concluído</span></td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			<td class="text-center">
+				<a href="#" class="btn  btn-link  btn-xs" title="Cadastrar Componentes Familiares"> 
+					<i class="glyphicon glyphicon-th-list"></i>
+				</a>
+			</td>
+			
+
+			 <td class="text-center">
+<!-- 				<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a> -->
+			 </td>        
+          </tr>  
+          
+       </tbody>
+     </table>
+     
+     
+  </div>  
+
+</section>
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  <script th:src="@{/javascripts/pesquisar-aluno.js}"></script>
+  
+</th:block>
+<script th:src="@{/javascripts/sigas.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+insert into grupo values ('Assistente Social')
+insert into grupo values ('Auxiliar no processo no bolsa')
+insert into grupo values ('Solicitante de bolsa')
+insert into grupo values ('Equipe Diretiva')
+insert into grupo values ('Admin Sistema')

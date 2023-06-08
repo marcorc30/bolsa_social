@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	
+<head>
+	<title>Pesquisa Inscritos no Processo Seletivo</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+	
+</head>	
+
+<body>
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-10">
+				  <h1>Relatório Deferidos / Indeferidos por Renda Percapita</h1>
+			</div>  
+			<div class="col-xs-2">
+<!-- 				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/processos}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Processos Seletivos</span>
+					</a>
+				</div> -->
+			</div>
+		  </div> 
+		</div>
+		</div>
+		
+	<div class="container-fluid">
+<!-- 		<button type="button" class="btn btn-success btn-lg mt-2 ml-2" data-toggle="modal" data-target=".bd-aluno-modal-sm">Novo Processo Seletivo</button> -->
+	</div>		
+
+	<div class="container-fluid">	
+		<form method="get" th:action="@{/relatorios/relatorio-deferido-indeferido}" target="_blank" th:object="${relatorioDeferidoIndeferidoFilter}">
+		
+			<div class="row">
+				<!-- <input type="number" th:field="*{processoId}" th:value="${processo.id}"> -->
+				
+				<div class="form-group col-sm-6">
+					<label class="control-label">Nome do Processo Seletivo</label>
+					<select class="form-control" id="unidade" th:field="*{idProcessoSeletivo}">
+							<option value="">Selecione o Processo Seletivo</option>
+							<option th:each="processo : ${processos}" th:value="${processo.id}" th:text="${processo.descricao}" ></option>
+					</select>
+				</div>
+				
+				<div class="form-group col-sm-6">
+					<label class="control-label">Situação da Solicitação</label>
+					<select class="form-control" id="unidade" th:field="*{concessao}">
+							<option value="">Selecione Deferida / Indeferida</option>
+							<option value="Deferida">Deferida</option>
+							<option value="Indeferida">Indeferida</option>
+					</select>
+				</div>
+			</div> 
+		
+			<button type="submit" class="btn btn-primary">Imprimir</button>
+			
+		</form>
+
+		
+		
+		
+	</div>
+
+
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+</th:block>	
+</body>
+
+</html>

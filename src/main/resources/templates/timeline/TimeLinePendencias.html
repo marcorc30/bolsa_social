@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+<title>Cadastro Inicial</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">
+
+</head>
+<body>
+
+
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-12">
+	 				  <h1>Verificar Pendências no Processo de Solicitação da Bolsa Social</h1>
+	 				  <p align="center" class="alert alert-warning">
+	 				   <strong>Prezado(a) <span th:text="${#authentication.principal.usuario.nome}"></span>, 
+	 				   por essa tela você pode visualizar as pendências da solicitação, e informar ao solicitante. 
+	 				   As pendências estão destacadas em vermelho.</strong>
+					</div>  
+				  </div> 
+				</div>
+			</div>	
+			
+	<div class="container-fluid">		
+	  	<form th:object="${dadosIniciais}" method="get">
+		<div class="row">
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Fazendo sua Escolha</h3>
+		        <ul style="list-style: none"> 
+		        	<li th:classappend = "${not dadosIniciais.etapa1} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa1} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Selecionando a Unidade de Ensino</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa2} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa2} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Aprovação do Edital</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa3} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa3} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Cadastrando os dados do Candidato</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success titulo-etapa">Vínculo com Candidato</h3>
+		        <ul style="list-style: none">
+		        	<li th:classappend = "${not dadosIniciais.etapa4} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa4} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Cadastro dos Irmãos</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa5} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa5} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Cadastro dos Responsáveis</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa6} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa6} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Composição Familiar</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa7} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa7} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Responsável Financeiro</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		 </div> 
+		 <div class="row"> 
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Situação da Composição Familiar</h3>
+		        <ul style="list-style: none">
+		        	<li th:classappend = "${not dadosIniciais.etapa8} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa8} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Situação Habitacional</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa9} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa9} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Bens Móveis</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa10} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa10} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Despesas</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa11} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa11} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Renda</li>
+		        	<li th:classappend = "${not dadosIniciais.etapa12} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa12} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Benefícios</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-sm-6 col-md-6">
+		    <div class="thumbnail">
+		      <div class="caption">
+		        <h3 align="center" class="alert alert-success">Finalizando a Solicitação</h3>
+		        <ul style="list-style: none">
+		        	<li th:classappend = "${not dadosIniciais.etapa13} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa13} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Declaração Final</li>
+		        	<!-- <li th:classappend = "${not dadosIniciais.etapa14} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa14} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i><a  th:href="${not dadosIniciais.etapa14} ? @{/documentos/novo}:'#'"> Envio de Documentos</a> </li> -->
+		        	<li th:classappend = "${not dadosIniciais.etapa14} ? 'marcado':'nao-marcado'"><i th:classappend = "${dadosIniciais.etapa14} ? 'glyphicon glyphicon-ok':'glyphicon glyphicon-pencil'" ></i>Upload de Documentos</li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  </div>
+		  <a href="javascript:history.back()" class="btn  btn-primary">Voltar para onde estava</a>
+		  </form>
+		</div> 
+		 
+	</section>
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  
+</th:block>	
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Responsável</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+ 
+<body>
+
+	<section layout:fragment="conteudo">		
+
+			<div class="page-header">
+				<div class="container-fluid">  
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Responsáveis -<span class="label label-danger">No máximo, 2 responsáveis</span></h1>
+ 	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato}"></span></font></h5>
+	 				  
+<!-- 	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+	 				  <h5><font color="blue">Processo Seletivo: <span th:text="|${processoSeletivo.id} - ${processoSeletivo.descricao}|"></span></font></h5>
+	 				  <h5><font color="blue">Unidade: <span th:text="|${unidade.id} - ${unidade.nome}|"></span></font></h5>
+	 				  <h5><font color="blue"> Curso/Série: <span th:text="|${detalhesProcesso.serie.nivel.descricao} - ${detalhesProcesso.serie.descricao}|"></span></font></h5>
+ --><!-- 	 				  <h2 th:foreach="lista : ${lista}">Responsável: <span th:text="${lista.nome}">Marco</span></h2>
+ -->					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">5ª Etapa</p>
+			                       <!--  <p class="h6 text-muted mb-0 mb-lg-0">Cadastro dos Responsáveis</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>
+
+
+			
+			<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>
+
+
+			<div class="container-fluid">
+
+				<form method="POST" th:object="${responsavel}" th:action="@{/responsaveis/novo}" class="form-vertical  js-form-loading">
+
+					<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+
+					<input type="hidden" th:field="*{id}">
+					<div class="row">
+					
+					   <div class="col-sm-9" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-responsavel-nome">Nome:</label> <input
+									id="input-responsavel-nome" type="text" class="form-control" th:field="*{nome}" />
+							</div>
+					   </div>		
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-responsavel-cpf">CPF:</label> 
+								<input
+									id="input-responsavel-cpf" type="text" class="form-control js-input-cpf" th:field="*{cpf}"/>
+							</div>
+						</div>					   
+							
+					</div>
+
+					<div class="row">
+					
+												
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
+				               <div class="form-group">
+					    	      <label class="control-label">Data de Nascimento:</label>	
+								  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+							              data-date-today-highlight="true" data-date-autoclose="true" data-date-orientation="bottom">
+								      <input type="text" id="data-nascimento" class="form-control js-date" th:field="*{dataNascimento}" autocomplete="off" placeholder="Data de Nascimento">
+								      <div class="input-group-addon">
+								         <span class="glyphicon glyphicon-th"></span>
+								      </div>
+								   </div>
+								</div>   
+							</div>
+
+		 				<div class="col-sm-3" th:classappend="${#fields.hasErrors('celular')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-responsavel_celular">Celular:</label> <input
+									id="input-responsavel_celular" type="text" class="form-control js-formatar-telefone" th:field="*{celular}"
+									/>
+							</div>
+						</div>
+						
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('rg')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-rg">RG:</label> <input
+									id="input-responsavel-cep" type="text" class="form-control " th:field="*{rg}"/>
+							</div>
+						</div>
+						
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('rgOrgao')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-rg_orgao">Órgão Expedidor:</label> <input
+									id="input-rg-orgao" type="text" class="form-control" th:field="*{rgOrgao}"/>
+							</div>
+						</div>
+						
+						
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('rgDataEmissao')} ? has-error">
+				               <div class="form-group">
+					    	      <label class="control-label">Data de Emissão:</label>	
+								  <div class="input-group date" data-provide="datepicker" data-date-language="pt-BR" 
+							              data-date-today-highlight="true" data-date-autoclose="true" data-date-orientation="bottom">
+								      <input type="text" id="data-emissao" class="form-control js-date" th:field="*{rgDataEmissao}" autocomplete="off" placeholder="Data de Nascimento">
+								      <div class="input-group-addon">
+								         <span class="glyphicon glyphicon-th"></span>
+								      </div>
+								   </div>
+								</div>   
+							</div>
+
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('parentesco')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-parentesco">Grau de Parentesco:</label> 
+								<select id="input-parentesco"  class="form-control" th:field="*{parentesco}">
+									<option value="">Selecione... </option> 
+									<option th:each="parentesco : ${parentescos}" th:value="${parentesco.id}" th:text="${parentesco.nome}">Pai</option> 
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-sm-3" th:classappend="${#fields.hasErrors('situacaoResponsavel')} ? has-error">
+							<div class="form-group">
+								<label class="control-label" for="input-situacao">Situacao:</label> 
+								<select id="input-situacao"  class="form-control" th:field="*{situacaoResponsavel}">
+									<option value="">Selecione... </option> 
+									<option th:each="situacaoResponsavel : ${situacoesResponsavel}" th:value="${situacaoResponsavel.id}" th:text="${situacaoResponsavel.nome}">Reside com o(a) candidato(a)</option> 
+								</select> 
+							</div>
+						</div>
+				
+					</div>
+					<div class="form-group" th:if="${#lists.size(responsaveis) < 3}">
+						<button th:if="${responsavel.novo}" class="btn  btn-success" type="submit">Adicionar</button>
+						<button th:unless="${responsavel.novo}" class="btn  btn-success" type="submit">Alterar</button>
+ 					</div>
+ 					
+				  <div>
+					  					   	
+				  <!-- Table -->
+					  <table class="table table-hover">
+					  	<thead>
+						  	<tr>
+						  		<th>Responsável</th>
+						  		<th>Parentesco</th>
+						  	</tr>
+					  	</thead>
+						<tbody>
+						  	<tr th:each="responsavel : ${responsaveis}"> 
+						  		<td th:text="${responsavel.nome}">Marco Aurélio Rodrigues Cavalheiro</td>
+						  		<td th:text="${responsavel.parentesco.nome}">Pai</td>
+						  		
+								 <td class="text-center">
+									<a th:href="@{/responsaveis/{id}(id=${responsavel.id})}" class="btn  btn-link  btn-xs js-tooltip" title="Editar" 
+									                   href="#">
+									   <i class="glyphicon glyphicon-pencil"></i>
+									</a>
+									<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#"
+										data:url="@{/responsaveis/{id}(id=${responsavel.id})}"
+										data:objeto="${responsavel.nome}">
+										<i class="glyphicon glyphicon-remove"></i>
+									</a>
+																		
+								 </td>         
+						  		 
+						  	</tr>
+						  	<tr th:if="${#lists.isEmpty(responsaveis)}"> 
+						  		  <td colspan="2"><font color="red">Nenhum responsável cadastrado</font></td>     
+						  	</tr>
+						  	
+						  	</tbody>
+					  </table>
+				  </div>
+				</form> 
+				
+				<div align="left" th:unless=${#lists.isEmpty(responsaveis)}>
+					<a  th:href="@{/composicao-familiar/novo}" class="btn btn-primary">Avançar</a>
+				</div>
+				
+				</div>					
+	
+
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	
+</th:block>
+
+</body>
+</html>

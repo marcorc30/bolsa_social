@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro de Usuários</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+	
+</head>	
+
+<body>
+<section layout:fragment="conteudo">
+<!-- <body class="aw-layout-simple-page"> -->
+  <div class="aw-layout-simple-page__container">
+	
+	<div class="aw-error-panel">
+		<h1 class="aw-error-panel__code">
+			<i class="fa  fa-lock"></i>
+		</h1>
+		
+		<h2 class="aw-error-panel__title">Acesso Indevido</h2>  
+		
+		<div class="aw-error-panel__description">
+			Prezado, você está tentando acessar informações não pertinentes a sua solicitação.
+			Seu acesso está sendo monitorado.
+			<br/><br/>
+			<a href="javascript:history.back()" class="btn  btn-primary">Voltar para onde estava</a>
+		</div>
+	</div>
+
+</div>
+
+<!-- </body>	 -->
+
+
+</section>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

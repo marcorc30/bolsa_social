@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro da Situação Habitacional</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+
+<body>
+
+	<section layout:fragment="conteudo">		
+
+			<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Situação Habitacional</h1>
+	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato}"></span></font></h5>
+	 				  
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">8ª Etapa</p>
+			                        <!-- <p class="h6 text-muted mb-0 mb-lg-0">Cadastro da Situação Habitacional</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div> 
+			</div>
+
+
+			
+			<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>
+
+
+			<div class="container-fluid">
+
+				<form method="POST" th:object="${situacaoHabitacional}" th:action="@{/situacao-habitacional/novo}" class="form-vertical  js-form-loading">
+				
+				<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+				
+					<div class="row">
+						<div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">Residência está localizada em área:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaArea}">
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="area : ${moradiasArea}" th:value="${area.id}" th:text="${area.area}">Urbana</option>
+								</select>
+							</div>
+						</div>					
+						<div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">O tipo de moradia é:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaTipo}">
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="tipo : ${moradiasTipo}" th:value="${tipo.id}" th:text="${tipo.tipo}">Urbana</option>
+								</select>
+							</div>		
+						</div>
+					</div>	
+					
+					<div class="row">
+						<div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">A família reside em:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaImovel}">
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="imovel : ${moradiasImovel}" th:value="${imovel.id}" th:text="${imovel.imovel}">Urbana</option>
+								</select>
+							</div>
+						</div>					
+						<div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">Condições da Moradia:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaCondicao}" >
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="condicao : ${moradiasCondicao}" th:value="${condicao.id}" th:text="${condicao.condicao}">Urbana</option>
+								</select>
+							</div>		
+						</div>
+					</div>					
+					
+					<div class="row">
+						<div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">Há outros moradores no terreno:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaOutrosMoradores}">
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="resposta : ${moradiasResposta}" th:value="${resposta.id}" th:text="${resposta.resposta}">Urbana</option>
+								</select>
+							</div>
+						</div>		
+					<div class="row">
+						<div class="col-sm-3 form-group">
+							<label class="control-label">Quantidade de cômodos na casa:</label>
+							<input type="text" class="form-control js-inteiro" th:field="*{quantidadeComodos}"/>
+						</div>
+					</div>									
+						<!-- <div class="col-sm-6" >
+							<div class="form-group">
+								<label class="control-label">Esses moradores tem vínculo familiar?:</label>
+								<select id="turno" name="turno" class="form-control" th:field="*{moradiaVinculoFamiliar}">
+									<option selected="selected" value="">Selecione...</option>
+									<option th:each="resposta : ${moradiasResposta}" th:value="${resposta.id}" th:text="${resposta.resposta}">Urbana</option>
+								</select>
+							</div>		
+						</div> -->
+					</div>					
+					<!-- <div class="row">
+						<div class="col-sm-3 form-group">
+							<label class="control-label">Quantidade de cômodos na casa</label>
+							<input type="text" class="form-control js-inteiro" th:field="*{quantidadeComodos}"/>
+						</div>
+					</div> -->
+							<div class="list-group">
+							  <div class="list-group-item active">
+							    <h4 class="list-group-item-heading">Atenção:</h4>
+							    <p class="list-group-item-text">
+							    Prezado(a), antes de gravar e avançar confira os dados informados nesta etapa. Não será possível retornar neste formulário para alterações.
+							  </div>
+							</div>	 					
+					
+					
+					<div class="form-group">
+						<button class="btn  btn-primary" type="submit">Gravar e Avançar</button>
+ 					</div>
+ 						
+				</form>
+				
+				
+			</div>
+	
+	</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/noback.js}"></script>	
+</th:block>
+</body>
+
+</html>				

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Rede La Salle</title>
+
+  	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/vendors.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/algaworks.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/application.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/main.css}"/>
+
+<body>
+
+
+	
+				<div th:replace="solicitante/fragments/BarraNavegacao :: navbar"></div>
+<section>		
+	<div class="page-header">
+	<div class="container-fluid">
+	  <div class="row">
+	    <div class="col-sm-10">
+	    	<h1>Cadastro de Usuários</h1>
+ 		</div>  
+		<!-- <div class="col-sm-2">
+			<div class="aw-page-header-controls">
+				<a class="btn  btn-default" th:href="@{/usuario/pesquisarUsuario}">
+					<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisar Usuários</span>
+				</a>
+			</div> 
+		</div> -->
+	  </div>
+	</div>
+</div>
+
+	<!-- <th:block th:replace="fragments/MensagensSucesso :: messageSuccess "> -->
+	
+	<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${mensagem}"></span><p>
+			<a th:href="@{/login}">Clique aqui e retorne para página de login</a>
+	</div>
+	
+
+	</th:block>
+	
+	
+
+<div class="container-fluid">
+
+	<!-- <div class="alert  alert-danger  alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<i class="fa  fa-exclamation-circle"></i> Já existe uma reserva com o nome informado.
+	</div> -->
+
+<!-- 	<form method="POST" th:object="${usuario}" class="form-vertical  js-form-loading"> -->
+	
+	<form method="POST" th:object="${usuario}" th:action="@{/solicitante/alunoExterno}">	
+
+	<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}" th:fragment="messageErro">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		
+		<th:block th:each="detailedError : ${#fields.detailedErrors()}">					
+			<div><i class="fa  fa-exclamation-circle"></i> [[${detailedError.message}]].</div> 
+		</th:block>	
+	</div>
+		
+		<input type="hidden" th:field="*{id}" />
+		
+		
+        <div class="row">
+          <div class="col-sm-4 form-group" th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+                <label for="cpf" class="control-label">CPF</label>
+                <input id="cpf" type="text" class="form-control js-input-cpf" th:field="*{cpf}">
+          </div>
+           
+		  <div class="col-sm-8 form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+				<label for="nome" class="control-label">Nome</label>
+				<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
+          </div>
+        </div> 
+        
+        <div class="row">
+		  <div class="col-sm-9 form-group" th:classappend="${#fields.hasErrors('email')} ? has-error">
+				<label for="email" class="control-label">E-Mail</label>
+				<input id="email" type="text" class="form-control" th:field="*{email}"/>
+		  </div> 	
+		  <div class="col-sm-3 form-group" th:classappend="${#fields.hasErrors('celular')} ? has-error">
+		  		<label for="celular" class="control-label">Celular</label>
+		  		<input id="celular" type="text" class="form-control js-formatar-telefone" th:field="*{celular}" />
+		  </div>
+        </div>  
+		
+		<div class="row">
+		  <div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('senha')} ? has-error">
+				<label for="senha" class="control-label">Senha</label>
+				<input id="senha" type="password" class="form-control" th:field="*{senha}"/>
+				<span><font color="red">Mínimo de 6 caracteres. Pode ter letras, números, letras com números</font></span>
+		  </div> 	
+
+		  <div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? has-error">
+				<label for="confirmacaoSenha" class="control-label">Confirmação de Senha</label>
+				<input id="confirmacaoSenha" type="password" class="form-control" th:field="*{confirmacaoSenha}" />
+		  </div> 	
+		  
+		  
+		</div>	
+		
+		
+		 
+	    <div class="form-group">
+			<button class="btn  btn-primary" type="submit">Salvar</button>
+		</div>
+	</form> 
+</div>	
+	
+</section>		
+<div th:replace="layout/fragments/Footer :: footer"></div>
+
+	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
+	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/jquery.mask.min.js}"></script>	
+    <script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>	
+	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.pt-BR.min.js}"></script>	
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>	
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/dialogo-excluir.js}"></script>
+
+
+
+</body>
+</html>

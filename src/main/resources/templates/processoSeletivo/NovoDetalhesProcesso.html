@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro das Séries do Processo Seletivo</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+
+	
+</head>	
+
+<body>
+ 
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Cadastrar as Séries do Processo Seletivo </h1>
+<!-- 	 				  <h1 th:if="${detalhesProcessoSeletivo.novo}">Cadastrar as Séries do Processo Seletivo </h1> -->
+<!-- 	 				  <h1 th:unless="${detalhesProcessoSeletivo.novo}" th:text="|Edição - ${detalhesProcessoSeletivo.serie.nivel.descricao} - ${detalhesProcessoSeletivo.serie.descricao}|"></h1>
+ -->	 				  
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/processos}">
+								<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisar Processo</span>
+							</a>
+						</div>
+					</div>
+				  </div> 
+				</div>
+		</div>
+			
+	
+	
+<div class="container-fluid">
+	
+		
+<div class="js-panel-series">
+	<div class="panel panel-default" > 
+		<div class="panel-heading">
+		<!-- <h4>Cadastro de Séries do Processo: </h4> -->
+		    <span>Processo Seletivo: <font color="blue"><span th:text="|${processoSeletivoId.id} - ${processoSeletivoId.descricao}|"></span> <span></span></font><small><font color="red"></font></small></span><p>
+			<span>Unidade: </span><font color="blue"><span th:text="${processoSeletivoId.unidade.nome}"></span></font></p>
+		</div>
+		    <div class="panel-body">
+		    <th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>	
+		    
+			<form th:object="${detalhesProcessoSeletivo}" th:action="${detalhesProcessoSeletivo.novo} ? @{/detalhesProcessos/novo} : @{/detalhesProcessos/{id}(id=${detalhesProcessoSeletivo.id})}" th:method="post">
+		
+			 <th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block>  
+				
+				
+			 <input type="hidden" th:field="*{id}">
+			 
+			 
+             <div class="row">
+                <div class="col-sm-2">
+                  <div class="form-group">
+                  	<label class="control-label">Processo Seletivo</label>
+                  	<input type="number" class="form-control" th:field="*{processoSeletivo.id}" readonly>
+                  </div>
+                </div> 
+				<div class="col-sm-2" th:classappend="${#fields.hasErrors('serie') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-curso">Curso - Ano/Série</label> 
+						<select id="input-curso"  class="form-control" th:field="*{serie}">
+							<option value="">Serie </option> 
+							<option th:each="serie : ${lista}" th:value="${serie.id}" th:text="|${serie.nivel.descricao} - ${serie.descricao}|">1º Ano - Ensino Médio</option> 
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-2" th:classappend="${#fields.hasErrors('turno') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-turno">Turno</label> 
+						<select id="input-curso"  class="form-control" th:field="*{turno}">
+							<option value="">Turno </option> 
+							<option th:each="turno : ${listaTurnos}" th:value="${turno.id}" th:text="${turno.descricao}">Matutino</option> 
+						</select>
+					</div>
+				</div>
+				
+ 				<div class="col-sm-2" th:classappend="${#fields.hasErrors('quantidadeBolsas100') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-bolsa100">Qtde Bolsa 100%</label> 
+						<input
+							id="input-bolsa100" type="text" class="form-control js-inteiro" th:field="*{quantidadeBolsas100}"  autocomplete="off" />
+					</div>
+				</div>
+ 				<div class="col-sm-2" th:classappend="${#fields.hasErrors('quantidadeBolsas50') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-bolsa50">Qtde Bolsa 50%</label> 
+						<input
+							id="input-bolsa50" type="text" class="form-control js-inteiro" th:field="*{quantidadeBolsas50}" autocomplete="off" />
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="control-label" for="obs">Motivo da Alteração <span><font color="red">*</font></span> </label>
+						<select class="form-control" th:field="*{motivoAlteracao}">
+							<option value="">Selecione...</option>
+							<option th:each="motivo : ${motivosAlteracao}" th:value="${motivo.id}" th:text="${motivo.descricao}">Informe o Motivo</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<span><font color="red">* O campo Motivo da Alteração será obrigatório somente se o Processo Seletivo já estiver iniciado.</font></span>
+				</div>
+			</div>
+			  <div class="form-group">
+					<button class="btn  btn-primary js-btn-salvar botao-novo-detalhe-processo-seletivo" type="submit" >Salvar</button>
+			  </div>	                      
+              </form>
+            </div>
+        </div>
+
+		<table class="table table-hover table-consulta">
+		       <thead>
+		       	  <tr>
+		       	    <th>Curso - Segmento - Ano/Série</th>
+		       	    <th>Turno</th>
+		       	    <th>Previstas - Bolsa 100%</th>
+		       	    <th>Previstas - Bolsa 50%</th>
+		       	    <th class="sombreado">Deferidas - Bolsa 100%</th>
+		       	    <th class="sombreado">Deferidas - Bolsa 50%</th>
+		       	    <th></th>
+		       	  </tr> 	 
+		       </thead>
+		       
+		       <tbody>
+		          <tr th:each = "serie : ${series}">
+		              <td th:text="|${serie.curso} - ${serie.serie}|"></td>
+		              <td th:text="${serie.turno}"></td>
+		              <td th:text="${serie.prevista_100}" align="center"></td>
+		              <td th:text="${serie.prevista_50}" align="center"></td>
+			          <td th:text="${serie.real_100}" align="center" class="sombreado">0</td>
+					  <td th:text="${serie.real_50}" align="center" class="sombreado">0</td>
+		        	  <td align="center">	
+		        	  	<a class="btn btn-link btn-xs js-tooltip" title="Editar" th:href="@{/detalhesProcessos/{id}/processo/{idProcesso}(id=${serie.detalhesId}, idProcesso=${serie.id})}">
+		        	  		<i class="glyphicon glyphicon-pencil"></i>					
+		        	  	</a>
+						<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#"
+									data:url=@{/detalhesProcessos/{id}(id=${serie.detalhesId})}
+									data:objeto="|${serie.curso} - ${serie.serie}|">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+					   </td>
+		           </tr>  
+		           <tr th:if="${#lists.isEmpty(series)}">
+						<td colspan=6><font color="red">Nenhuma Série Cadastrada</font></td>
+		           </tr>
+		       </tbody>
+		    </table>            
+                      
+         <!-- <table class="table table-hover table-consulta">
+		       <thead>
+		       	  <tr>
+		       	    <th>Curso - Segmento - Ano/Série</th>
+		       	    <th>Turno</th>
+		       	    <th>Previstas - Bolsa 100%</th>
+		       	    <th>Previstas - Bolsa 50%</th>
+		       	    <th class="sombreado">Deferidas - Bolsa 100%</th>
+		       	    <th class="sombreado">Deferidas - Bolsa 50%</th>
+		       	    <th></th>
+		       	  </tr> 	 
+		       </thead>
+		       
+		       <tbody>
+		          <tr th:each = "serie : ${series}">
+		              <td th:text="|${serie.serie.nivel.descricao} - ${serie.serie.descricao}|"></td>
+		              <td th:text="${serie.turno.descricao}"></td>
+		              <td th:text="${serie.quantidadeBolsas100}" align="center"></td>
+		              <td th:text="${serie.quantidadeBolsas50}" align="center"></td>
+			          <td align="center" class="sombreado">0</td>
+					  <td align="center" class="sombreado">0</td>
+		        	  <td align="center">	
+		        	  	<a class="btn btn-link btn-xs js-tooltip" title="Editar" th:href="@{/detalhesProcessos/{id}/processo/{idProcesso}(id=${serie.id}, idProcesso=${serie.processoSeletivo.id})}">
+		        	  		<i class="glyphicon glyphicon-pencil"></i>					
+		        	  	</a>
+						<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#"
+									data:url=@{/detalhesProcessos/{id}(id=${serie.id})}
+									data:objeto="|${serie.serie.nivel.descricao} - ${serie.serie.descricao}|">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+					   </td>
+		           </tr>  
+		           <tr th:if="${#lists.isEmpty(series)}">
+						<td colspan=6><font color="red">Nenhuma Série Cadastrada</font></td>
+		           </tr>
+		       </tbody>
+		    </table>  -->
+		 </div>   
+	</div>
+</section>
+
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-processos-seletivos.js}"></script>
+  <script th:src="@{/javascripts/cadastro-detalhes-processo-seletivo.js}"></script>
+  <script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+</th:block>
+
+</body>
+
+</html> 

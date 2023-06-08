@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro das Informações Financeiras</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	    
+ </head>	
+
+<body>
+
+	<section layout:fragment="conteudo">		 
+
+			<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Declaração Final</h1>
+	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato}"></span></font></h5>
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">13ª Etapa</p>
+			                       <!--  <p class="h6 text-muted mb-0 mb-lg-0">Declaração Final</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>
+
+
+			
+			<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>
+
+
+			<div class="container-fluid">
+
+				<form method="POST" th:object="${declaracaoFinal}" th:action="@{/declaracao-final/novo}" class="form-vertical  js-form-loading">
+					
+					<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+				
+					
+					<div class=row>
+							<div class="col-sm-6" >
+								<div class="form-group">
+									<label class="control-label">No Grupo Familiar, algum membro declara Imposto de Renda?</label>
+									<select  class="form-control" th:field="*{irResposta}" >
+										<option value="">Selecione....</option>
+										<option th:each="resposta : ${respostas}" th:value="${resposta.id}" th:text="${resposta.irresposta}">Não</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-6" >
+								<div class="form-group">
+									<label class="control-label">Grupo Familiar é Inscrito do CadÚnico?</label>
+									<select  class="form-control" th:field="*{inscritoCadUnico}">
+										<option value="">Selecione....</option>
+										<option value="1">Sim</option>
+										<option value="0">Não</option>
+									</select>
+								</div>
+							</div>
+							
+							
+   						   
+						</div>				
+						
+						
+							<blockquote class="blockquote">
+							  <h3 align="center"><strong>Declaração</strong></h3>	
+							  <p class="mb-0 text-justify">
+							  Declaro, sob as penas da lei (Artigo 299 do Código Penal e art. 7º da LGPD), que as informações aqui 
+							  descritas são verdadeiras e coloco-me à disposição para qualquer esclarecimento que se fizer necessário, 
+							  bem como autorizo realização de visita domiciliar por assistente social a qualquer tempo com a finalidade 
+							  de verificação ou complementação das informações fornecidas, e estou ciente que os dados descritos acima e
+							  os documentos anexos a esta ficha socioeconômica serão unicamente para fins educativos e são passíveis de
+							  verificação junto ao MEC e outros órgãos públicos.
+							  </p>
+							  <footer class="blockquote-footer"><span th:text="${responsavel_financeiro.cpf}"></span><cite title="Título da fonte"><span th:text="|  ${responsavel_financeiro.nome}|">Marco Aurélio Rodrigues Cavalheiro</span></cite></footer>
+							</blockquote>
+							
+							<div class="list-group">
+							  <div class="list-group-item active">
+							    <h4 class="list-group-item-heading">Atenção:</h4>
+							    <p class="list-group-item-text">
+							    Prezado(a), antes de gravar e avançar confira os dados informados nesta etapa. Não será possível retornar neste formulário para alterações.
+							  </div>
+							</div>	 					
+							
+							
+			    <button class="btn  btn-primary" type="submit">Gravar e Finalizar</button>
+				
+				</form>
+				
+
+
+	<div class="form-group">
+			<!-- <a th:href="@{/finalizar}" class="btn btn-primary">Gravar e Avançar</a> -->
+ 	</div>				
+				
+			</div>
+	</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/noback.js}"></script>	
+</th:block>	
+</body>
+</html>				

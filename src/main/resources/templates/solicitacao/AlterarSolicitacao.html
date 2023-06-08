@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Análise CIBS</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	
+ </head>	
+ 
+<body>
+
+<section layout:fragment="conteudo">		
+
+		<div class="page-header">
+			<div class="container-fluid">  
+			  <div class="row"> 
+			    <div class="col-sm-10">
+ 				  <h1>Alterar Status da Solicitação de Bolsa</h1> 
+ 				   	 <h5><font color="blue">Protocolo: <span th:text="${dadosIniciais.protocolo}"></span></font></h5>
+ 	 				 <h5><font color="blue">Candidato - Aluno: <span th:text="${candidato.nome}"></span></font></h5>
+ 	 				 <h5><font color="blue">Processo Seletivo: <span th:text="|${dadosIniciais.processoSeletivo.id} - ${dadosIniciais.processoSeletivo.descricao}|"></span></font></h5>
+	 				 <h5><font color="blue">Unidade: <span th:text="|${dadosIniciais.unidade.id} - ${dadosIniciais.unidade.nome}|"></span></font></h5>
+	 				 <h5><font color="blue">Curso / Série / Turno: <span class='dados-solicitacao' th:text="|${dadosIniciais.detalhesProcessoSeletivo.serie.nivel.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.serie.descricao} - ${dadosIniciais.detalhesProcessoSeletivo.turno.descricao}|"></span></font></h5>
+	 				 <h5><font color="red">Status Atual: <span class='dados-solicitacao' th:text="|${dadosIniciais.status.descricao}|"></span></font></h5>
+	 				 <h5><font color="red">Status Anterior: <span th:if="${dadosIniciais.temStatusAnterior}" class='dados-solicitacao' th:text="|${dadosIniciais.statusAnterior.descricao}|"></span></font></h5>
+ 	 				 
+ 				  
+					</div>  
+			<div class="col-xs-2">
+				<div class="aw-page-header-controls">
+					<a class="btn  btn-default" th:href="@{/processos/avaliar/{id}(id=${dadosIniciais.processoSeletivo.id})}">
+						<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Listar Inscrições</span>
+					</a>
+				</div> 
+			</div>
+			  </div> 
+			</div>
+		</div>
+		
+	<div class="container-fluid">
+		<th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>	
+		<form method="post" th:object="${dadosIniciais}" th:action="@{/solicitacao/alterarStatus}">
+					<input type="hidden" th:field="*{id}">
+		<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block> 
+				
+ 					<div class="row">
+						<div class=col-sm-6>
+							<div class="form-group">
+								<label class="control-label">Novo Status</label>
+								<select  class="form-control" name="novo_status">
+									<option value="">Selecione o Novo Status</option>
+									<!-- <option th:each="statusSolicitacaoPedidos : ${statusSolicitacao}" th:text="${statusSolicitacaoPedidos}" th:value="${statusSolicitacaoPedidos}">Preenchido</option> -->
+									<option value="CANCELADO">CANCELADO</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+				<div class="row">
+			    	<div class="col-sm-12 form-group">
+			    		<label class="control-label"><font color="blue"><strong>Motivo da Alteração</strong></font></label>
+						<textarea rows=10 class="form-control" name="motivo" ></textarea>
+				    </div>
+				</div>					
+				
+			
+			
+				<div class="row">
+				 <div class="col-sm-4">
+				  <div class="form-group">
+						<button class="btn  btn-primary" type="submit">Salvar</button>
+				  </div>			
+				 </div>
+				</div> 
+		</form>			
+			
+	</div>
+</section>
+</body>
+</html>

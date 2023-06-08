@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Cadastro das Séries do Processo Seletivo</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+	<link rel="stylesheet" type="text/css" th:hred="@{/stylesheets/sigas.css}">	
+
+	
+</head>	
+
+<body>
+ 
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-sm-10">
+				  <h1>Cadastro das Séries do Processo Seletivo - Etapa 2</h1>
+				</div>  
+		  </div> 
+		</div>
+	</div>
+			
+	
+	
+<div class="container-fluid">
+	
+	
+	<div class="panel panel-default js-panel-processo">
+		<div class="panel-heading"><h4>Informe os dados abaixo para filtrar o Processo Seletivo que se deseja cadastrar as séries.<small><font color="red"></font></small></h4></div>
+		  <div class="panel-body">
+		   <form method="get"  action="">
+			<div class="row">	
+				<div class="col-sm-3" >
+					<div class="form-group">
+						<label class="control-label" for="input-estado-unidade">Estado da Unidade <font color="red">*</font> </label> 
+						<select id="input-estado-unidade"  class="form-control" >
+							<option value=""></option> 
+							<option th:each = "uf : ${ufs}" th:value="${uf}" th:text="${uf}" >DF</option> 
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-sm-3" >
+					<div class="form-group">
+						<label class="control-label" for="input-unidade">Unidade <font color="red">*</font></label> 
+						<select id="input-unidade"  class="form-control" >
+							<option value=""></option> 
+							<!-- <option th:each = "unidade : ${unidades}" th:value="${unidade.id}" th:text="${unidade.nome}" >  -->
+						</select>
+					</div>
+				</div>
+
+				<div class="col-sm-3" >
+					<div class="form-group">
+						<label class="control-label" for="input-processo-seletivo">Processo Seletivo <font color="red">*</font></label> 
+						<select id="input-processo-seletivo"  class="form-control" >
+							<option value=""></option> 
+						</select>
+					</div>
+				</div>
+				
+			</div>
+			
+			 <div class="form-group">
+				<a href="#" class="btn btn-primary js-filtrar-processos" role="button">Filtrar</a>
+		    </div>
+				
+			<div class=row>
+				<div class="col-sm-12">
+				  <small><font color="red">(*) É obrigatório selecionar as informações acima</font></small>
+				</div> 
+			</div>
+		</form>	
+	  </div>
+	</div>
+	
+<div class="js-panel-series">
+	<div class="panel panel-default" >
+		<div class="panel-heading"><h4>Cadastro de Séries do Processo: <span id="informacao_processo"> <font color="blue"><span id="js-nome-processo"></span> - <span id="js-nome-unidade"></span></font><small><font color="red"></font></small></span></h4></div>
+		    <div class="panel-body">
+		    <th:block th:replace="fragments/MensagensSucesso :: messageSuccess"></th:block>	
+		    
+		<form th:object="${detalhesProcessoSeletivo}" th:action="@{/detalhesProcessos/novo}" th:method="post">
+		
+			 <th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block>  
+				
+			 <input type="hidden" th:field="*{id}">
+			 
+			 <!-- <div class="row">
+			   <div class="col-sm=6">
+			      <label class="control-label">Unidade</label>
+			      <input type="text" id="input-unidade-display" class="form-control">
+			   </div>
+			   <div class="col-sm=6">
+			      <label class="control-label">Processo Seletivo</label>
+			      <input type="text" id="input-processo-display" class="form-control">
+			   </div>
+			 </div>	 -->
+             <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                  	<label class="control-label">Processo Seletivo</label>
+                  	<input type="text" id="processo" class="form-control js-input-processo-seletivo" th:field="*{processoSeletivo}" readonly>
+                  </div>
+                </div> 
+				<div class="col-sm-3" th:classappend="${#fields.hasErrors('serie') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-curso">Curso - Segmento - Ano/Série</label> 
+						<select id="input-curso"  class="form-control" th:field="*{serie}">
+							<option value="">Serie </option> 
+							<option th:each="serie : ${lista}" th:value="${serie.id}" th:text="${serie.descricao}">1º Ano - Ensino Médio</option> 
+						</select>
+					</div>
+				</div>
+ 				<div class="col-sm-3" th:classappend="${#fields.hasErrors('quantidadeBolsas100') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-bolsa100">Qtde Bolsa 100%</label> 
+						<input
+							id="input-bolsa100" type="text" class="form-control js-inteiro" th:field="*{quantidadeBolsas100}" th:value="*{quantidadeBolsas100}" autocomplete="off" />
+					</div>
+				</div>
+ 				<div class="col-sm-3" th:classappend="${#fields.hasErrors('quantidadeBolsas50') } ? has-error">
+					<div class="form-group">
+						<label class="control-label" for="input-bolsa50">Qtde Bolsa 50%</label> 
+						<input
+							id="input-bolsa50" type="text" class="form-control js-inteiro" th:field="*{quantidadeBolsas50}" autocomplete="off" />
+					</div>
+				</div>
+			</div>
+			  <div class="form-group">
+					<button class="btn  btn-primary js-btn-salvar" type="submit" disabled>Salvar</button>
+				   </div>	                      
+              </form>
+            </div>
+        </div>
+           
+                      
+         <table class="table table-hover table-consulta">
+		       <thead>
+		       	  <tr>
+		       	    <th>Curso - Segmento - Ano/Série</th>
+		       	    <th>Previstas - Qtde Bolsa 100%</th>
+		       	    <th>Previstas - Qtde Bolsa 50%</th>
+		       	    <th>Alterar</th>
+		       	    <th>Excluir</th>
+		       	    <th>Deferidas - Qtde Bolsa 100%</th>
+		       	    <th>Deferidas -  Qtde Bolsa 50%</th>
+		       	  </tr> 	
+		       </thead>
+		       
+		       <tbody>
+		          <tr th:each = "serie : ${series}">
+		              <td th:text="${serie.serie.descricao}">Auditório II</td>
+		              <td th:text="${serie.quantidadeBolsas100}">Auditório II</td>
+		              <td th:text="${serie.quantidadeBolsas50}">Auditório II</td>
+		              			
+						 <td class="text-center">
+							<a class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+							   <i class="glyphicon glyphicon-pencil"></i>
+							</a>
+						 </td>
+						 <td class="text-center">	
+							<a class="btn  btn-link  btn-xs js-tooltip " title="Excluir" href="#">
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>
+						 </td>
+			            <td>0</td>
+						<td>0</td>
+		           </tr>  
+		       </tbody>
+		    </table> 
+		 </div>   
+	</div>
+</section>
+
+
+<th:block layout:fragment="javascript-extra">
+  <script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+  <script th:src="@{/javascripts/sigas.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-unidade.js}"></script>
+  <script th:src="@{/javascripts/pesquisa-processos-seletivos.js}"></script>
+  <script th:src="@{/javascripts/cadastro-detalhes-processo-seletivo.js}"></script>
+  <script th:src="@{/javascripts/vendors/jquery.maskMoney.js}"></script>
+</th:block>
+
+</body>
+
+</html> 

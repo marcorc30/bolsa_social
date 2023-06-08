@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/LayoutPadrao'">
+	
+<head>
+	<title>Upload de documentos</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/sigas.css}">
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/timeline.css}">	    
+ </head>	
+
+<body>
+
+	<section layout:fragment="conteudo">		 
+
+			<div class="page-header">
+				<div class="container-fluid">
+				  <div class="row">
+				    <div class="col-sm-10">
+	 				  <h1>Documentos obrigatórios - Upload</h1>
+	 				  <h5><font color="blue">Protocolo: <span th:text="${protocolo}"></span></font></h5>
+ 	 				  <h5><font color="blue">Candidato: <span th:text="${candidato}"></span></font></h5>
+					</div>  
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+								<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+			                        <div class="inner-circle"></div>
+			                        <p class="h6 mt-3 mb-1">14ª Etapa</p>
+			                      <!--   <p class="h6 text-muted mb-0 mb-lg-0">Cadastro das Rendas</p> -->
+			                    </div>						
+			                </div>    
+		                </div>
+					</div>
+				  </div> 
+				</div>
+			</div>
+
+
+			
+		
+
+
+			<div class="container-fluid">
+			
+
+				<form method="POST" th:object="${documento}" th:action="@{/documentos/novo}" class="form-vertical  js-form-loading">
+				<th:block th:replace="fragments/MensagensErroValidacao :: messageErro"></th:block>
+					
+					<input type="hidden" th:field="*{id}" />
+				
+					<h1>Documentos dos integrantes da composição familiar<small></small></h1>
+		
+					<div class="row">
+							<div class="col-sm-6" >
+								<div class="form-group">
+									<label class="control-label">Integrante:</label>
+									<select  class="form-control" th:field="*{componenteFamiliar}">
+										<option value="">Selecione....</option>
+										<option th:each="componente : ${componentes}" th:value="${componente.id}" th:text="${componente.nome}">Fulano de Tal</option>
+									</select>
+								</div>
+							</div>
+					</div>
+					<div class="row">		
+							<div class="col-sm-6" >
+								<div class="form-group">
+									<label class="control-label">Grupo do Documento:</label>
+									
+										<select class="form-control" th:field="*{grupoDocumento}">
+											<option value="">Selecione...</option>
+											<option value="Declaração">Declaração</option>
+											<option value="Identificação">Identificação</option>
+											<option value="Comprovante de Situação">Comprovante de Situação</option>	
+											<option value="Comprovante de Situação">Laudo Médico</option>	
+										</select>
+									
+								</div>
+							</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label class="control-label">Descrição:</label>
+							<input type="text" class="form-control" th:field="*{descricao}">
+						</div>
+					</div>
+					<div class="row">		
+	 					  <div class="form-group col-sm-6">
+							<label class="control-label">Nome do Arquivo enviado:</label>
+						   	<input type="text" th:field="*{nomeArquivo}" readonly="readonly" class="form-control">
+	 					  		
+							  	<div>
+							  		<i class="glyphicon gkyphicon-cloud-upload"></i>
+							  		<a> <input id="upload-select" type="file" accept=".pdf" /></a>
+							  		
+							  	</div> 
+							  	
+						   </div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-6">
+						</div>
+					</div>
+				   <div class="form-group col-sm-3">
+					   	  <button th:if="${documento.novo}" class="btn btn-success botao" type="submit">Adicionar</button>	
+					   	  <button th:unless="${documento.novo}" class="btn btn-success botao" type="submit">Alterar</button>	
+				   </div>
+				
+				</form>
+				
+<table class="table table-hover table-consulta">
+       <thead>
+       	  <tr>
+       	    <th>Nome</th>
+       	    <th>Grupo do Documento</th>
+       	    <th>Descrição</th>
+       	    <th>Arquivo</th>
+       	  </tr> 	
+       </thead>
+       
+       <tbody>
+          <tr th:each="documento : ${documentos}">
+            <td th:text="${documento.componenteFamiliar.nome}">José Roberto Pereira</td>
+            <td th:text="${documento.grupoDocumento}">Identificação</td>
+            <td th:text="${documento.descricao}">habilitacao.pdf</td>
+            <td>
+            	<a th:href="@{/arquivo/{nomeArquivo}(nomeArquivo = ${documento.nomeArquivo})}" target="_blank">
+           		 	<i class="glyphicon glyphicon-duplicate"></i>
+            	</a>
+            </td>
+			<td class="text-center">
+				<a th:href="@{/documentos/{id}(id=${documento.id})}" class="btn  btn-link  btn-xs js-tooltip" title="Editar">
+				   <i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a class="btn  btn-link  btn-xs js-tooltip js-exclusao-btn " title="Excluir" href="#"
+						data:url="@{/documentos/{id}(id=${documento.id})}"
+						data:objeto="${documento.descricao}" >
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			 </td>        
+          </tr>                   
+       </tbody>
+     </table>				
+				
+	<div class="form-group">
+
+			<a th:href="@{/documentos-comuns/novo}" class="btn btn-primary">Avançar</a>
+			<!-- <a href="pesquisa-responsaveis.html" class="btn  btn-default">Cancelar</a> -->
+ 	</div>				
+				
+			</div>
+	</section>
+	
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/sigas.js}"></script>
+	<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/upload.min.js}"></script>	
+	
+	<script>
+		$(function(){
+			var settings = {
+					type: "json",
+					filelimit: "1",
+					allow: '*.(pdf)', 
+					action: '/sigas/arquivo',
+					complete: function(resposta){
+						console.log('resposta', resposta)
+						$('input[name=nomeArquivo]').val(resposta.nome)
+					}  
+					
+			};
+			
+			UIkit.uploadSelect($('#upload-select'), settings);
+		})
+	
+	</script>	
+</th:block>	
+</body>
+</html>				

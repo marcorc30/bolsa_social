@@ -1,0 +1,275 @@
+.imagem-principal {
+	 margin: 0 auto;
+	 margin-top: 120px;
+ 	max-width:4000px;
+    max-height:3000px;
+   
+}
+
+
+.modal {
+	margin-top: 60px;
+}
+
+.modal-content{
+   height: 90%; /*altura da modal*/
+} 
+
+.modal-body{
+   height: 80%; /*altura da modal*/
+} 
+
+.modal-dialog{
+   max-width: 70%; /*largura da modal*/
+   height: 100%; /*altura da view da modal (não alterar)*/
+   margin: 0 auto !important; /*centralizar modal horizontalmente*/
+}
+
+.modal-footer{
+	 height: 100%;
+}
+
+#contentModal{
+    overflow: auto; /*habilita o overflow no corpo da modal*/
+}
+
+#modalGenerica{
+   overflow: hidden; /*evitar overflow da view da modal*/
+}
+
+/* #modal-edital{
+	height: 60%;
+} 
+ */
+
+.botao{ 
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.table-consulta{
+  margin-top: 20px;	
+}
+
+
+.ad-glyphicon-large{
+	font-size: 18px; 
+}
+
+
+.ad-field-action{
+	display: flex;
+	
+}
+
+.ad-field-action__icon{
+	margin: 6px 0 0 5px;
+}
+
+.ad-field-action-apoio__icon{
+	margin: 6px 0 0 5px;
+}
+
+.ad-field-action-label{
+	display: flex;
+}
+
+
+.checkbox input[type="checkbox"]:checked + input + label::after{
+	font-family: 'FontAwesome';
+	content: "\f00c";
+}
+
+.container img {
+    max-width:200px;
+    max-height:150px;
+    width: auto;
+    height: auto;
+}
+
+.input-ra {
+	width: 20;
+}
+
+.botao-modal{
+/* 	margin-top: 20px;
+	margin-bottom: 20px;
+ */	margin-left: 20px;
+	margin: 6px 0 0 5px;
+}
+
+#RA-aluno {
+	display: none;
+}
+
+#botao-prosseguir {
+	display : none;
+}
+
+#mensagem-erro-ra-inexistente {
+	display: none;
+	color: red;
+}
+
+#spinner {
+	display: none;
+}
+
+#nome-aluno {
+	display: none;
+	color: blue;
+}
+
+#raAluno {
+	display: true;
+}
+
+.tabela-dados-iniciais {
+  table-layout: fixed;
+}
+
+.tabela-simples {
+	margin-top: 20px; 
+}
+
+.sombreado {
+	background-color: #add8e6;
+}
+
+.botao-novo-processo-seletivo {
+	margin-bottom: 20px;
+}
+
+.botao-novo-detalhe-processo-seletivo {
+	margin-top: 20px;
+
+}
+
+.botao-pesquisar {
+	margin-top: 20px;
+}
+
+
+/* .js-panel-series {
+	display: none;
+} */
+
+
+/*
+######################################
+# CUSTOMIZAÇÃO DE COMPONENTES
+######################################
+*/
+
+.checkbox input[type="checkbox"]:checked + input + label::after {
+    font-family: 'FontAwesome';
+    content: "\f00c"; 
+}
+
+
+/* Upload */
+.sigas-upload {
+	padding: 15px;
+	
+	border: 1px dashed #ddd;
+	border-radius: 4px;
+	background: #fafafa;
+	
+	text-align: center;
+}
+
+.sigas-upload-form-file {
+	display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1px;
+}
+
+.sigas-upload-form-file > input[type=file] {
+	position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+    
+    font-size: 500px;
+}
+
+.mostrar-botao-upload {
+	display: none;
+}
+
+.thumbnail{
+	padding-top: 1px !important;
+	margin-top: 0px;
+	height: 200px;
+}
+
+.marcado {
+	color: red;
+}
+
+.nao-marcado {
+	color: blue;
+}
+
+.link-alteracao {
+	text-decoration-color: none !important;
+	text-decoration: none !important;
+	text-transform: none !important;
+}
+
+.alerta-aviso {
+	font-size: 20px;
+}
+
+.soma {
+	color: blue;
+	font-size: 15px;
+}
+
+.dados-solicitacao {
+	color: blue;
+}
+
+.label-margem {
+	padding-top: 5px !important;
+	margin-bottom: 0px !important;
+}
+
+#info{
+	font-size: 15px;
+	margin-left: 5px;
+	color: red;
+}
+
+.info-renda{
+   height: 50% !important; /*altura da modal*/
+} 
+
+.js-email {
+  max-width: 10ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imagem-login{
+	width: 90%
+}
+
+.informacao {
+	padding: 20px;
+}
+
+.inf {
+	color: white;
+}
+
+.js-status-solicitacao {
+	color: red;
+	background-color: wellow;
+}
