@@ -16,7 +16,7 @@ Objetivo:
 A rede de escolas XPTO, possui várias unidades espalhadas pelo Brasil, e pelo mundo. Para as escolas situadas no Brasil, foi proposto um sistema que controlasse a concessão de gratuídades (bolsas) para familias que tinham um índice elevado de vulnerabilidade. O controle da concessão de bolsas ofertadas e deferidas era muito difícl de se fazer por unidade escolar, pois cada escola tinha seu método, e ao final do ano, a consolidação dos dados se tornava um trabalho árduo para as Assistente Sociais e para a área administrativa.
 
 Posto isso, foram criados 2 módulos:
-* Módulo de cadastro do requerimento pelas familias => O responsável pelo aluno, cria uma conta no portal, e segue todos os passos abaixo:
+=> Módulo de cadastro do requerimento pelas familias => O responsável pelo aluno, cria uma conta no portal, e segue todos os passos abaixo:
  * Fazendo sua escolha:  
     * Selecionando a Unidade de Ensino
     * Aprovação do Edital
@@ -32,7 +32,7 @@ Posto isso, foram criados 2 módulos:
     * Emissão da Ficha Sócio Econômica com os dados da solicitação.
 
 
-* Módulo de administração => acessado pelas assistentes sociais de cada unidade, com visão específica da sua escola, e também, acessada pelas assistentes sociais da rede, com visão geral de todas as unidades.
+=> Módulo de administração => acessado pelas assistentes sociais de cada unidade, com visão específica da sua escola, e também, acessada pelas assistentes sociais da rede, com visão geral de todas as unidades.
   * Análise dos dados previamente informados, por unidade, geral, por selecionados;
   * Solicitar envio de novos documentos.
   * Realizar pré-análise pelas auxiliares
