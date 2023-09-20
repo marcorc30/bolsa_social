@@ -13,7 +13,7 @@ O projeto foi desenvolvido em java, usando as seguintes tecnologias:
 * Thymeleaf
 
 Objetivo:
-A rede de escolas XPTO, possui várias unidades espalhadas pelo Brasil, e pelo mundo. Para as escolas situadas no Brasil, foi proposto um sistema que controlasse a concessão de gratuídades (bolsas) para familias que tinham um índice elevado de vulnerabilidade. O controle da concessão de bolsas ofertadas e deferidas era muito difícl de se fazer por unidade escolar, pois cada escola tinha seu método, e ao final do ano, a consolidação dos dados se tornava um trabalho árduo para as Assistente Sociais e para a área administrativa.
+A rede de escolas, possui várias unidades espalhadas pelo Brasil, e pelo mundo. Para as escolas situadas no Brasil, foi proposto um sistema que controlasse a concessão de gratuídades (bolsas) para familias que tinham um índice elevado de vulnerabilidade. O controle da concessão de bolsas ofertadas e deferidas era muito difícl de se fazer por unidade escolar, pois cada escola tinha seu método, e ao final do ano, a consolidação dos dados se tornava um trabalho árduo para as Assistente Sociais e para a área administrativa.
 
 Posto isso, foram criados 2 módulos:
 
