@@ -17,16 +17,16 @@ A rede de escolas XPTO, possui várias unidades espalhadas pelo Brasil, e pelo m
 
 Posto isso, foram criados 2 módulos:
 * Módulo de cadastro do requerimento pelas familias => O responsável pelo aluno, cria uma conta no portal, e segue todos os passos abaixo:
-  * Fazendo sua escolha:  
+ * Fazendo sua escolha:  
     * Selecionando a Unidade de Ensino
     * Aprovação do Edital
     * Cadastrando os dados do Candidato
-* Vínculo com o(a) candidato(a) e a situação habitacional da família
+ * Vínculo com o(a) candidato(a) e a situação habitacional da família
     * Composição Familiar e Renda Bruta (Pessoas que moram com o condidato(a) e a soma dos ganhos financeiros do grupo familiar)
     * Situação Habitacional e Bens móveis
     * Despesas
     * Outras rendas agregadas & Benefícios assistenciais
-* Finalizando a Solicitação
+ * Finalizando a Solicitação
     * Declaração Final
     * Upload de Documentos
     * Emissão da Ficha Sócio Econômica com os dados da solicitação.
